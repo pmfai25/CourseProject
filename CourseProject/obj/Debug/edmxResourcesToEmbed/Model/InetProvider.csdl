@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InetProviderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="ClientID" Type="Int32" Nullable="false" />
+    <Property Name="Cash" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DebtCeiling" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_Account_Client" FromRole="Account" ToRole="Client" />
+    <NavigationProperty Name="InetOrders" Relationship="Self.FK_Order_Account" FromRole="Account" ToRole="InetOrder" />
+    <NavigationProperty Name="Refills" Relationship="Self.FK_Refill_Account" FromRole="Account" ToRole="Refill" />
+  </EntityType>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="Int32" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StreetNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Flat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InetOrders" Relationship="Self.FK_InetOrder_Address" FromRole="Address" ToRole="InetOrder" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Client" FromRole="Client" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="PositionID" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Position" Relationship="Self.FK_Employee_Job" FromRole="Employee" ToRole="Position" />
+    <NavigationProperty Name="InetOrders" Relationship="Self.FK_Order_Employee" FromRole="Employee" ToRole="InetOrder" />
+    <NavigationProperty Name="InetOrders1" Relationship="Self.FK_Order_Employee1" FromRole="Employee" ToRole="InetOrder" />
+  </EntityType>
+  <EntityType Name="InetOrder">
+    <Key>
+      <PropertyRef Name="InetOrderID" />
+    </Key>
+    <Property Name="InetOrderID" Type="Int32" Nullable="false" />
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="TariffID" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="FinishDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActual" Type="Boolean" />
+    <Property Name="AutomaticPayment" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+    <Property Name="AddressID" Type="Int32" />
+    <NavigationProperty Name="Account" Relationship="Self.FK_Order_Account" FromRole="InetOrder" ToRole="Account" />
+    <NavigationProperty Name="Address" Relationship="Self.FK_InetOrder_Address" FromRole="InetOrder" ToRole="Address" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Order_Employee" FromRole="InetOrder" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK_Order_Employee1" FromRole="InetOrder" ToRole="Employee" />
+    <NavigationProperty Name="Tariff" Relationship="Self.FK_Order_Tariff" FromRole="InetOrder" ToRole="Tariff" />
+    <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Order" FromRole="InetOrder" ToRole="Payment" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int32" Nullable="false" />
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="PaymentTime" Type="DateTime" Precision="3" />
+    <Property Name="Cash" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="InetOrder" Relationship="Self.FK_Payment_Order" FromRole="Payment" ToRole="InetOrder" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PositionID" />
+    </Key>
+    <Property Name="PositionID" Type="Int32" Nullable="false" />
+    <Property Name="PositionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Job" FromRole="Position" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Refill">
+    <Key>
+      <PropertyRef Name="RefillID" />
+    </Key>
+    <Property Name="RefillID" Type="Int32" Nullable="false" />
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="RefillTime" Type="DateTime" Precision="3" />
+    <Property Name="Cash" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Account" Relationship="Self.FK_Refill_Account" FromRole="Refill" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tariff">
+    <Key>
+      <PropertyRef Name="TariffID" />
+    </Key>
+    <Property Name="TariffID" Type="Int32" Nullable="false" />
+    <Property Name="TrafficLimit" Type="Int32" />
+    <Property Name="Speed" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TariffName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InetOrders" Relationship="Self.FK_Order_Tariff" FromRole="Tariff" ToRole="InetOrder" />
+  </EntityType>
+  <Association Name="FK_Account_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="InetOrder">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Refill_Account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="Refill" Type="Self.Refill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="Refill">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InetOrder_Address">
+    <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+    <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressID" />
+      </Principal>
+      <Dependent Role="InetOrder">
+        <PropertyRef Name="AddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Job">
+    <End Role="Position" Type="Self.Position" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="InetOrder">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Employee1">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="InetOrder">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Tariff">
+    <End Role="Tariff" Type="Self.Tariff" Multiplicity="0..1" />
+    <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tariff">
+        <PropertyRef Name="TariffID" />
+      </Principal>
+      <Dependent Role="InetOrder">
+        <PropertyRef Name="TariffID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_Order">
+    <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InetOrder">
+        <PropertyRef Name="InetOrderID" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InetProviderEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="Addresses" EntityType="Self.Address" />
+    <EntitySet Name="Clients" EntityType="Self.Client" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="InetOrders" EntityType="Self.InetOrder" />
+    <EntitySet Name="Payments" EntityType="Self.Payment" />
+    <EntitySet Name="Positions" EntityType="Self.Position" />
+    <EntitySet Name="Refills" EntityType="Self.Refill" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tariffs" EntityType="Self.Tariff" />
+    <AssociationSet Name="FK_Account_Client" Association="Self.FK_Account_Client">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Account" Association="Self.FK_Order_Account">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="InetOrder" EntitySet="InetOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Refill_Account" Association="Self.FK_Refill_Account">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Refill" EntitySet="Refills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InetOrder_Address" Association="Self.FK_InetOrder_Address">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="InetOrder" EntitySet="InetOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Job" Association="Self.FK_Employee_Job">
+      <End Role="Position" EntitySet="Positions" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Employee" Association="Self.FK_Order_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="InetOrder" EntitySet="InetOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Employee1" Association="Self.FK_Order_Employee1">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="InetOrder" EntitySet="InetOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Tariff" Association="Self.FK_Order_Tariff">
+      <End Role="Tariff" EntitySet="Tariffs" />
+      <End Role="InetOrder" EntitySet="InetOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_Order" Association="Self.FK_Payment_Order">
+      <End Role="InetOrder" EntitySet="InetOrders" />
+      <End Role="Payment" EntitySet="Payments" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(InetProviderModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(InetProviderModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using CourseProject.Model;
+using System.Linq;
 
 namespace CourseProject.ViewModel
 {

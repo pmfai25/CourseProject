@@ -36,6 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
@@ -49,7 +55,11 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -70,10 +80,74 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Account.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Address.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Client.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
     <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Model\Employee.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GenericRepository.EntityFramework\EntitiesContext.cs" />
+    <Compile Include="Model\GenericRepository.EntityFramework\EntityRepository%271.cs" />
+    <Compile Include="Model\GenericRepository.EntityFramework\EntityRepository%272.cs" />
+    <Compile Include="Model\GenericRepository.EntityFramework\IEntitiesContext.cs" />
+    <Compile Include="Model\GenericRepository.EntityFramework\IEntityRepository%271.cs" />
+    <Compile Include="Model\GenericRepository.EntityFramework\IEntityRepository%272.cs" />
+    <Compile Include="Model\GenericRepository\IEntity%271.cs" />
+    <Compile Include="Model\GenericRepository\IEntity.cs" />
+    <Compile Include="Model\GenericRepository\IRepository%271.cs" />
+    <Compile Include="Model\GenericRepository\IRepository%272.cs" />
+    <Compile Include="Model\GenericRepository\PaginatedList.cs" />
+    <Compile Include="Model\GenericRepository\QueryableExtensions.cs" />
+    <Compile Include="Model\InetOrder.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\InetProvider.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InetProvider.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\InetProvider.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\InetProvider.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InetProvider.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
+    <Compile Include="Model\Payment.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Position.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refill.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_helpdiagrams_Result.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sysdiagram.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tariff.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
@@ -111,6 +185,23 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Model\InetProvider.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InetProvider.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\InetProvider.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InetProvider.edmx</DependentUpon>
+      <LastGenOutput>InetProvider.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Model\InetProvider.edmx.diagram">
+      <DependentUpon>InetProvider.edmx</DependentUpon>
+    </None>
+    <None Include="Model\InetProvider.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InetProvider.edmx</DependentUpon>
+      <LastGenOutput>InetProvider.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -121,6 +212,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -29,3 +29,8 @@ D:\University\1Programs\CourseProject\CourseProject\obj\Debug\CourseProject.Prop
 D:\University\1Programs\CourseProject\CourseProject\obj\Debug\CourseProject.csproj.GenerateResource.Cache
 D:\University\1Programs\CourseProject\CourseProject\obj\Debug\CourseProject.exe
 D:\University\1Programs\CourseProject\CourseProject\obj\Debug\CourseProject.pdb
+D:\University\1Programs\CourseProject\CourseProject\obj\Debug\CourseProject.csprojResolveAssemblyReference.cache
+D:\University\1Programs\CourseProject\CourseProject\bin\Debug\EntityFramework.dll
+D:\University\1Programs\CourseProject\CourseProject\bin\Debug\EntityFramework.SqlServer.dll
+D:\University\1Programs\CourseProject\CourseProject\bin\Debug\EntityFramework.xml
+D:\University\1Programs\CourseProject\CourseProject\bin\Debug\EntityFramework.SqlServer.xml

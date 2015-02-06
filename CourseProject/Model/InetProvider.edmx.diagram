@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1a8edc3593be43508449063706ead851" Name="Diagram1">
+        <EntityTypeShape EntityType="InetProviderModel.Account" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.Address" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.Client" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.Employee" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.InetOrder" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.Payment" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.Position" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.Refill" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InetProviderModel.Tariff" Width="1.5" PointX="7.5" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="InetProviderModel.FK_Account_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="InetProviderModel.FK_Order_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="InetProviderModel.FK_Refill_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="InetProviderModel.FK_InetOrder_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="InetProviderModel.FK_Employee_Job" ManuallyRouted="false" />
+        <AssociationConnector Association="InetProviderModel.FK_Order_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="InetProviderModel.FK_Order_Employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="InetProviderModel.FK_Order_Tariff" ManuallyRouted="false" />
+        <AssociationConnector Association="InetProviderModel.FK_Payment_Order" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
