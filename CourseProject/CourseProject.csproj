@@ -93,18 +93,6 @@
     <Compile Include="Model\Employee.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\GenericRepository.EntityFramework\EntitiesContext.cs" />
-    <Compile Include="Model\GenericRepository.EntityFramework\EntityRepository%271.cs" />
-    <Compile Include="Model\GenericRepository.EntityFramework\EntityRepository%272.cs" />
-    <Compile Include="Model\GenericRepository.EntityFramework\IEntitiesContext.cs" />
-    <Compile Include="Model\GenericRepository.EntityFramework\IEntityRepository%271.cs" />
-    <Compile Include="Model\GenericRepository.EntityFramework\IEntityRepository%272.cs" />
-    <Compile Include="Model\GenericRepository\IEntity%271.cs" />
-    <Compile Include="Model\GenericRepository\IEntity.cs" />
-    <Compile Include="Model\GenericRepository\IRepository%271.cs" />
-    <Compile Include="Model\GenericRepository\IRepository%272.cs" />
-    <Compile Include="Model\GenericRepository\PaginatedList.cs" />
-    <Compile Include="Model\GenericRepository\QueryableExtensions.cs" />
     <Compile Include="Model\InetOrder.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>

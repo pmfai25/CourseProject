@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-06 15:25:59Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-07 08:43:09Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="Account.cs" Line="17">'Account.Account()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Account..ctor()&#xD;&#xA;Account.set_InetOrders(ICollection&lt;InetOrder&gt;):Void</Issue>
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="Account.cs" Line="17">'Account.Account()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Account..ctor()&#xD;&#xA;Account.set_Refills(ICollection&lt;Refill&gt;):Void</Issue>
             </Message>
@@ -24,7 +24,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-06 15:25:59Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-07 08:43:09Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="Address.cs" Line="17">'Address.Address()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Address..ctor()&#xD;&#xA;Address.set_InetOrders(ICollection&lt;InetOrder&gt;):Void</Issue>
             </Message>
            </Messages>
@@ -35,7 +35,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-06 15:25:59Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-07 08:43:09Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="Client.cs" Line="17">'Client.Client()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Client..ctor()&#xD;&#xA;Client.set_Accounts(ICollection&lt;Account&gt;):Void</Issue>
             </Message>
            </Messages>
@@ -46,7 +46,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-06 15:25:59Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-07 08:43:09Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="Employee.cs" Line="17">'Employee.Employee()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Employee..ctor()&#xD;&#xA;Employee.set_InetOrders(ICollection&lt;InetOrder&gt;):Void</Issue>
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="Employee.cs" Line="17">'Employee.Employee()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Employee..ctor()&#xD;&#xA;Employee.set_InetOrders1(ICollection&lt;InetOrder&gt;):Void</Issue>
             </Message>
@@ -58,7 +58,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-06 15:25:59Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-07 08:43:09Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="InetOrder.cs" Line="17">'InetOrder.InetOrder()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;InetOrder..ctor()&#xD;&#xA;InetOrder.set_Payments(ICollection&lt;Payment&gt;):Void</Issue>
             </Message>
            </Messages>
@@ -69,7 +69,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-06 15:25:59Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-07 08:43:09Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="Position.cs" Line="17">'Position.Position()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Position..ctor()&#xD;&#xA;Position.set_Employees(ICollection&lt;Employee&gt;):Void</Issue>
             </Message>
            </Messages>
@@ -80,23 +80,12 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-06 15:25:59Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2015-02-07 08:43:09Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="d:\University\1Programs\CourseProject\CourseProject\Model" File="Tariff.cs" Line="17">'Tariff.Tariff()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;Tariff..ctor()&#xD;&#xA;Tariff.set_InetOrders(ICollection&lt;InetOrder&gt;):Void</Issue>
             </Message>
            </Messages>
           </Member>
          </Members>
-        </Type>
-       </Types>
-      </Namespace>
-      <Namespace Name="GenericRepository.EntityFramework">
-       <Types>
-        <Type Name="EntitiesContext" Kind="Class" Accessibility="Public" ExternallyVisible="True">
-         <Messages>
-          <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2015-02-06 15:25:59Z" FixCategory="Breaking">
-           <Issue Name="IDisposableReimplementation" Certainty="95" Level="Error">Remove IDisposable from the list of interfaces implemented by 'EntitiesContext' and override the base class Dispose implementation instead.</Issue>
-          </Message>
-         </Messages>
         </Type>
        </Types>
       </Namespace>
@@ -115,16 +104,6 @@
    <Email>[none]</Email>
    <MessageLevel Certainty="95">CriticalWarning</MessageLevel>
    <File Name="usagerules.dll" Version="12.0.0.0" />
-  </Rule>
-  <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
-   <Name>Implement IDisposable correctly</Name>
-   <Description>All IDisposable types should implement the Dispose pattern correctly.</Description>
-   <Resolution Name="IDisposableReimplementation">Remove IDisposable from the list of interfaces implemented by {0} and override the base class Dispose implementation instead.</Resolution>
-   <Owner />
-   <Url>http://msdn.microsoft.com/library/ms244737.aspx</Url>
-   <Email>[none]</Email>
-   <MessageLevel Certainty="95">Error</MessageLevel>
-   <File Name="designrules.dll" Version="12.0.0.0" />
   </Rule>
  </Rules>
  <Localized>
