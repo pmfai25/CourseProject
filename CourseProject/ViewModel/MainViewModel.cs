@@ -50,17 +50,18 @@ namespace CourseProject.ViewModel
         public MainViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            _dataService.GetData(
-                (item, error) =>
-                {
-                    if (error != null)
-                    {
-                        // Report error here
-                        return;
-                    }
+            //_dataService.GetData(
+            //    (item, error) =>
+            //    {
+            //        if (error != null)
+            //        {
+            //            // Report error here
+            //            return;
+            //        }
 
-                    WelcomeTitle = item.Title;
-                });
+            //        WelcomeTitle = item.Title;
+            //    });
+            WelcomeTitle = _dataService.All<Client>().First().FirstName;
         }
 
         ////public override void Cleanup()
