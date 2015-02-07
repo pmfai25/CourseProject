@@ -135,6 +135,7 @@
     <Compile Include="Model\Tariff.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
+    <Compile Include="PasswordHash.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

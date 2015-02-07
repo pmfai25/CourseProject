@@ -12,7 +12,7 @@ namespace CourseProject.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private readonly IDataService _dataService;
+        private IDataService _dataService;
 
         /// <summary>
         /// The <see cref="WelcomeTitle" /> property's name.

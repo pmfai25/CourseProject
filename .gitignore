@@ -29,7 +29,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # builds
-
+CourseProject/bin/
+CourseProject/obj/
 [Dd]ebug/
 [Rr]elease/
 x64/
