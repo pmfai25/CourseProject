@@ -1,7 +1,7 @@
 ﻿using CourseProject.Model;
 using GalaSoft.MvvmLight;
-using System.Collections.Generic;
 using PasswordSecurity;
+using System.Collections.Generic;
 
 namespace CourseProject.ViewModel
 {
@@ -11,41 +11,72 @@ namespace CourseProject.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ClientViewModel : ViewModelBase
+    public class EmployeeViewModel : ViewModelBase
     {
-        private Client _client;
+        private Employee _employee;
+
         /// <summary>
-        /// Initializes a new instance of the ClientViewModel class.
+        /// Initializes a new instance of the EmployeeViewModel class.
         /// </summary>
-        public ClientViewModel(Client client)
+        public EmployeeViewModel(Employee employee)
         {
-            _client = client;
+            _employee = employee;
         }
 
         /// <summary>
-        /// The <see cref="ClientID" /> property's name.
+        /// The <see cref="EmployeeID" /> property's name.
         /// </summary>
-        public const string ClientIDPropertyName = "ClientID";
+        public const string EmployeeIDPropertyName = "EmployeeID";
 
         /// <summary>
-        /// Sets and gets the ClientID property.
+        /// Sets and gets the EmployeeID property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public int ClientID
+        public int EmployeeID
         {
             get
             {
-                return _client.ClientID;
+                return _employee.EmployeeID;
             }
 
             set
             {
-                if (_client.ClientID == value)
+                if (_employee.EmployeeID == value)
                 {
                     return;
                 }
-                _client.ClientID = value;
-                RaisePropertyChanged(ClientIDPropertyName);
+
+                _employee.EmployeeID = value;
+                RaisePropertyChanged(EmployeeIDPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="PositionID" /> property's name.
+        /// </summary>
+        public const string PositionIDPropertyName = "PositionID";
+
+        /// <summary>
+        /// Sets and gets the PositionID property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public int PositionID
+        {
+            get
+            {
+                return _employee.PositionID;
+            }
+
+            set
+            {
+                if (_employee.PositionID == value)
+                {
+                    return;
+                }
+
+                _employee.PositionID = value;
+                RaisePropertyChanged(PositionIDPropertyName);
+                RaisePropertyChanged(PositionPropertyName);
             }
         }
 
@@ -62,17 +93,17 @@ namespace CourseProject.ViewModel
         {
             get
             {
-                return _client.FirstName;
+                return _employee.FirstName;
             }
 
             set
             {
-                if (_client.FirstName == value)
+                if (_employee.FirstName == value)
                 {
                     return;
                 }
 
-                _client.FirstName = value;
+                _employee.FirstName = value;
                 RaisePropertyChanged(FirstNamePropertyName);
             }
         }
@@ -90,17 +121,17 @@ namespace CourseProject.ViewModel
         {
             get
             {
-                return _client.MiddleName;
+                return _employee.MiddleName;
             }
 
             set
             {
-                if (_client.MiddleName == value)
+                if (_employee.MiddleName == value)
                 {
                     return;
                 }
 
-                _client.MiddleName = value;
+                _employee.MiddleName = value;
                 RaisePropertyChanged(MiddleNamePropertyName);
             }
         }
@@ -118,17 +149,17 @@ namespace CourseProject.ViewModel
         {
             get
             {
-                return _client.LastName;
+                return _employee.LastName;
             }
 
             set
             {
-                if (_client.LastName == value)
+                if (_employee.LastName == value)
                 {
                     return;
                 }
 
-                _client.LastName = value;
+                _employee.LastName = value;
                 RaisePropertyChanged(LastNamePropertyName);
             }
         }
@@ -146,17 +177,17 @@ namespace CourseProject.ViewModel
         {
             get
             {
-                return _client.Phone;
+                return _employee.Phone;
             }
 
             set
             {
-                if (_client.Phone == value)
+                if (_employee.Phone == value)
                 {
                     return;
                 }
 
-                _client.Phone = value;
+                _employee.Phone = value;
                 RaisePropertyChanged(PhonePropertyName);
             }
         }
@@ -174,17 +205,17 @@ namespace CourseProject.ViewModel
         {
             get
             {
-                return _client.Username;
+                return _employee.Username;
             }
 
             set
             {
-                if (_client.Username == value)
+                if (_employee.Username == value)
                 {
                     return;
                 }
 
-                _client.Username = value;
+                _employee.Username = value;
                 RaisePropertyChanged(UsernamePropertyName);
             }
         }
@@ -202,43 +233,99 @@ namespace CourseProject.ViewModel
         {
             protected get
             {
-                return _client.Password;
+                return _employee.Password;
             }
 
             set
             {
-                _client.Password = PasswordHash.CreateHash(value);
+                _employee.Password = PasswordHash.CreateHash(value);
                 RaisePropertyChanged(PasswordPropertyName);
             }
         }
 
         /// <summary>
-        /// The <see cref="Accounts" /> property's name.
+        /// The <see cref="Position" /> property's name.
         /// </summary>
-        public const string AccountsPropertyName = "Accounts";
+        public const string PositionPropertyName = "Position";
 
         /// <summary>
-        /// Sets and gets the Accounts property.
+        /// Sets and gets the Position property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual ICollection<Account> Accounts
+        public virtual Position Position
         {
             get
             {
-                return _client.Accounts;
+                return _employee.Position;
+            }
+
+            set
+            {
+                if (_employee.Position == value)
+                {
+                    return;
+                }
+
+                _employee.Position = value;
+                RaisePropertyChanged(PositionPropertyName);
+                RaisePropertyChanged(PositionIDPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="InetOrdersCreated" /> property's name.
+        /// </summary>
+        public const string InetOrdersCreatedPropertyName = "InetOrdersCreated";
+
+        /// <summary>
+        /// Sets and gets the InetOrdersCreated property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public virtual ICollection<InetOrder> InetOrdersCreated
+        {
+            get
+            {
+                return _employee.InetOrders;
             }
 
             //protected set
             //{
-            //    if (_client.Accounts == value)
+            //    if (_employee.InetOrders == value)
             //    {
             //        return;
             //    }
 
-            //    _client.Accounts = value;
-            //    RaisePropertyChanged(AccountsPropertyName);
+            //    _employee.InetOrders = value;
+            //    RaisePropertyChanged(InetOrdersCreatedPropertyName);
             //}
         }
 
+        /// <summary>
+        /// The <see cref="InetOrdersUpdated" /> property's name.
+        /// </summary>
+        public const string InetOrdersUpdatedPropertyName = "InetOrdersUpdated";
+
+        /// <summary>
+        /// Sets and gets the InetOrdersUpdated property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ICollection<InetOrder> InetOrdersUpdated
+        {
+            get
+            {
+                return _employee.InetOrders1;
+            }
+
+            //protected set
+            //{
+            //    if (_employee.InetOrders1 == value)
+            //    {
+            //        return;
+            //    }
+
+            //    _employee.InetOrders1 = value;
+            //    RaisePropertyChanged(InetOrdersUpdatedPropertyName);
+            //}
+        }
     }
 }
