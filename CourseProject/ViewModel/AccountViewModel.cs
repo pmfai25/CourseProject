@@ -1,6 +1,7 @@
 ﻿using CourseProject.Model;
 using GalaSoft.MvvmLight;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace CourseProject.ViewModel
@@ -14,12 +15,21 @@ namespace CourseProject.ViewModel
     public class AccountViewModel : ViewModelBase
     {
         private Account _account;
+        private IDataService _dataService;
         /// <summary>
         /// Initializes a new instance of the AccountViewModel class.
         /// </summary>
-        public AccountViewModel(Account account)
+        public AccountViewModel(IDataService dataService, Account account)
         {
+            _dataService = dataService;
             _account = account;
+            //if (dataService.All<Account>().Contains<Account>(account))
+            //{
+            //    //make a copy here, not just new
+            //    _account = new Account();
+            //}
+            //else
+            //    _account = account;
         }
 
         /// <summary>
@@ -40,13 +50,27 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_account.AccountID == value)
+                if (_account.AccountID == value ||
+                    value <= 0 ||
+                    _dataService.All<Account>()
+                    .Where<Account>(a => a.AccountID == value)
+                    .Count<Account>() > 0)
                 {
                     return;
                 }
-
+                
                 _account.AccountID = value;
                 RaisePropertyChanged(AccountIDPropertyName);
+
+                foreach (var refill in Refills)
+                {
+                    refill.AccountID = value;
+                }
+                
+                foreach (var inetOrder in InetOrders)
+                {
+                    inetOrder.AccountID = value;
+                }
             }
         }
 
@@ -68,13 +92,24 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_account.ClientID == value)
+                if (_account.ClientID == value ||
+                    value <= 0 ||
+                    _dataService.All<Client>()
+                    .Where<Client>(c => c.ClientID == value)
+                    .Count<Client>() < 1)
                 {
                     return;
                 }
 
                 _account.ClientID = value;
                 RaisePropertyChanged(ClientIDPropertyName);
+////////////////// need test!!!
+                if (Client != null)
+                    Client.Accounts.Remove(_account);
+
+                Client = _dataService.All<Client>().
+                    Where<Client>(c => c.ClientID == value).Single<Client>();
+                Client.Accounts.Add(_account);
             }
         }
 
@@ -94,9 +129,10 @@ namespace CourseProject.ViewModel
                 return _account.Cash;
             }
 
-            set
+            protected set
             {
-                if (_account.Cash == value)
+                if (_account.Cash == value ||
+                    value < DebtCeiling)
                 {
                     return;
                 }
@@ -124,11 +160,13 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_account.DebtCeiling == value)
+                if (value > _account.Cash)
+                    value = _account.Cash;
+                if (_account.DebtCeiling == value ||
+                    value > 0)
                 {
                     return;
                 }
-
                 _account.DebtCeiling = value;
                 RaisePropertyChanged(DebtCeilingPropertyName);
             }
@@ -206,7 +244,7 @@ namespace CourseProject.ViewModel
                 return _account.Refills;
             }
 
-            set
+            protected set
             {
                 if (_account.Refills == value)
                 {
@@ -217,5 +255,8 @@ namespace CourseProject.ViewModel
                 RaisePropertyChanged(RefillsPropertyName);
             }
         }
+
+        public bool RefillCash();
+        public bool PayCash();
     }
 }
