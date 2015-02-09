@@ -51,3 +51,9 @@ build/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Not necessary files
+
+CourseProject/bin/Debug/CourseProject.exe.CodeAnalysisLog.xml
+CourseProject/obj/Debug/CourseProject.csproj.FileListAbsolute.txt
+CourseProject/obj/Debug/CourseProject.g.resources
