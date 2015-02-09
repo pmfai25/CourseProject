@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseProject.ViewModel
 {
@@ -14,40 +15,34 @@ namespace CourseProject.ViewModel
     public class InetOrderViewModel : ViewModelBase
     {
         private InetOrder _inetOrder;
+        private IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the InetOrderViewModel class.
         /// </summary>
-        public InetOrderViewModel(InetOrder inetOrder)
+        public InetOrderViewModel(IDataService dataService, InetOrder inetOrder)
         {
             _inetOrder = inetOrder;
+            _dataService = dataService;
+            //move next code to save command
+            if (_dataService.All<InetOrder>().Contains(_inetOrder))
+            {
+                _inetOrder.UpdatedAt = DateTime.Now;
+                //EmployeeUpdated = current user
+                return;
+            }
+            _inetOrder.CreatedAt = DateTime.Now;
+            //EmployeeCreated = current user
         }
 
         /// <summary>
-        /// The <see cref="InetOrderID" /> property's name.
-        /// </summary>
-        public const string InetOrderIDPropertyName = "InetOrderID";
-
-        /// <summary>
-        /// Sets and gets the InetOrderID property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the InetOrderID property.
         /// </summary>
         public int InetOrderID
         {
             get
             {
                 return _inetOrder.InetOrderID;
-            }
-
-            set
-            {
-                if (_inetOrder.InetOrderID == value)
-                {
-                    return;
-                }
-
-                _inetOrder.InetOrderID = value;
-                RaisePropertyChanged(InetOrderIDPropertyName);
             }
         }
 
@@ -69,12 +64,19 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_inetOrder.AccountID == value)
+                if (_inetOrder.AccountID == value ||
+                    value <= 0 ||
+                    _dataService.All<Account>()
+                    .Where(a => a.AccountID == value)
+                    .Count() < 1)
                 {
                     return;
                 }
-
-                _inetOrder.AccountID = value;
+                if (Account != null)
+                    Account.InetOrders.Remove(_inetOrder);
+                Account = _dataService.All<Account>()
+                    .Where(a => a.AccountID == value).Single();
+                Account.InetOrders.Add(_inetOrder);
                 RaisePropertyChanged(AccountIDPropertyName);
             }
         }
@@ -97,12 +99,19 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_inetOrder.TariffID == value)
+                if (_inetOrder.TariffID == value ||
+                    value <= 0 ||
+                    _dataService.All<Tariff>()
+                    .Where(t => t.TariffID == value)
+                    .Count() < 1)
                 {
                     return;
                 }
-
-                _inetOrder.TariffID = value;
+                if (Tariff != null)
+                    Tariff.InetOrders.Remove(_inetOrder);
+                Tariff = _dataService.All<Tariff>()
+                    .Where(t => t.TariffID == value).Single();
+                Tariff.InetOrders.Add(_inetOrder);
                 RaisePropertyChanged(TariffIDPropertyName);
             }
         }
@@ -176,10 +185,10 @@ namespace CourseProject.ViewModel
         {
             get
             {
-                return _inetOrder.IsActual;
+                return _inetOrder.IsActual = FinishDate > DateTime.Now;
             }
 
-            set
+            protected set
             {
                 if (_inetOrder.IsActual == value)
                 {
@@ -204,7 +213,7 @@ namespace CourseProject.ViewModel
         {
             get
             {
-                return _inetOrder.AutomaticPayment;
+                return _inetOrder.AutomaticPayment; // unable to save if null!
             }
 
             set
@@ -220,13 +229,7 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="CreatedBy" /> property's name.
-        /// </summary>
-        public const string CreatedByPropertyName = "CreatedBy";
-
-        /// <summary>
-        /// Sets and gets the CreatedBy property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the CreatedBy property.
         /// </summary>
         public Nullable<int> CreatedBy
         {
@@ -234,72 +237,29 @@ namespace CourseProject.ViewModel
             {
                 return _inetOrder.CreatedBy;
             }
-
-            set
-            {
-                if (_inetOrder.CreatedBy == value)
-                {
-                    return;
-                }
-
-                _inetOrder.CreatedBy = value;
-                RaisePropertyChanged(CreatedByPropertyName);
-            }
         }
 
         /// <summary>
-        /// The <see cref="CreatedAt" /> property's name.
-        /// </summary>
-        public const string CreatedAtPropertyName = "CreatedAt";
-
-        /// <summary>
-        /// Sets and gets the CreatedAt property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the CreatedAt property. 
         /// </summary>
         public Nullable<System.DateTime> CreatedAt
         {
             get
             {
+                if (_inetOrder.CreatedAt == null)
+                    _inetOrder.CreatedAt = StartDate;
                 return _inetOrder.CreatedAt;
-            }
-
-            set
-            {
-                if (_inetOrder.CreatedAt == value)
-                {
-                    return;
-                }
-
-                _inetOrder.CreatedAt = value;
-                RaisePropertyChanged(CreatedAtPropertyName);
             }
         }
 
         /// <summary>
-        /// The <see cref="UpdatedBy" /> property's name.
-        /// </summary>
-        public const string UpdatedByPropertyName = "UpdatedBy";
-
-        /// <summary>
-        /// Sets and gets the UpdatedBy property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the UpdatedBy property.
         /// </summary>
         public Nullable<int> UpdatedBy
         {
             get
             {
                 return _inetOrder.UpdatedBy;
-            }
-
-            set
-            {
-                if (_inetOrder.UpdatedBy == value)
-                {
-                    return;
-                }
-
-                _inetOrder.UpdatedBy = value;
-                RaisePropertyChanged(UpdatedByPropertyName);
             }
         }
 
@@ -319,7 +279,7 @@ namespace CourseProject.ViewModel
                 return _inetOrder.UpdatedAt;
             }
 
-            set
+            protected set
             {
                 if (_inetOrder.UpdatedAt == value)
                 {
@@ -349,12 +309,19 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_inetOrder.AddressID == value)
+                if (_inetOrder.AddressID == value ||
+                    value <= 0 ||
+                    _dataService.All<Address>()
+                    .Where(a => a.AddressID == value)
+                    .Count() < 1)
                 {
                     return;
                 }
-
-                _inetOrder.AddressID = value;
+                if (Address != null)
+                    Address.InetOrders.Remove(_inetOrder);
+                Address = _dataService.All<Address>()
+                    .Where(a => a.AddressID == value).Single();
+                Address.InetOrders.Add(_inetOrder);
                 RaisePropertyChanged(AddressIDPropertyName);
             }
         }
@@ -368,14 +335,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the Account property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual Account Account
+        public Account Account
         {
             get
             {
                 return _inetOrder.Account;
             }
 
-            set
+            protected set
             {
                 if (_inetOrder.Account == value)
                 {
@@ -396,14 +363,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the Address property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual Address Address
+        public Address Address
         {
             get
             {
                 return _inetOrder.Address;
             }
 
-            set
+            protected set
             {
                 if (_inetOrder.Address == value)
                 {
@@ -424,14 +391,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the EmployeeCreated property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual Employee EmployeeCreated
+        public Employee EmployeeCreated
         {
             get
             {
                 return _inetOrder.Employee;
             }
 
-            set
+            private set
             {
                 if (_inetOrder.Employee == value)
                 {
@@ -452,14 +419,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the EmployeeUpdated property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual Employee EmployeeUpdated
+        public Employee EmployeeUpdated
         {
             get
             {
                 return _inetOrder.Employee1;
             }
 
-            set
+            protected set
             {
                 if (_inetOrder.Employee1 == value)
                 {
@@ -480,14 +447,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the Tariff property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual Tariff Tariff
+        public Tariff Tariff
         {
             get
             {
                 return _inetOrder.Tariff;
             }
 
-            set
+            private set
             {
                 if (_inetOrder.Tariff == value)
                 {
@@ -515,7 +482,7 @@ namespace CourseProject.ViewModel
                 return _inetOrder.Payments;
             }
 
-            set
+            protected set
             {
                 if (_inetOrder.Payments == value)
                 {

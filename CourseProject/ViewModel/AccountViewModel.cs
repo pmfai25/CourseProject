@@ -23,54 +23,16 @@ namespace CourseProject.ViewModel
         {
             _dataService = dataService;
             _account = account;
-            //if (dataService.All<Account>().Contains<Account>(account))
-            //{
-            //    //make a copy here, not just new
-            //    _account = new Account();
-            //}
-            //else
-            //    _account = account;
         }
 
         /// <summary>
-        /// The <see cref="AccountID" /> property's name.
-        /// </summary>
-        public const string AccountIDPropertyName = "AccountID";
-
-        /// <summary>
-        /// Sets and gets the AccountID property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the AccountID property.
         /// </summary>
         public int AccountID
         {
             get
             {
                 return _account.AccountID;
-            }
-
-            set
-            {
-                if (_account.AccountID == value ||
-                    value <= 0 ||
-                    _dataService.All<Account>()
-                    .Where<Account>(a => a.AccountID == value)
-                    .Count<Account>() > 0)
-                {
-                    return;
-                }
-                
-                _account.AccountID = value;
-                RaisePropertyChanged(AccountIDPropertyName);
-
-                foreach (var refill in Refills)
-                {
-                    refill.AccountID = value;
-                }
-                
-                foreach (var inetOrder in InetOrders)
-                {
-                    inetOrder.AccountID = value;
-                }
             }
         }
 
@@ -95,21 +57,17 @@ namespace CourseProject.ViewModel
                 if (_account.ClientID == value ||
                     value <= 0 ||
                     _dataService.All<Client>()
-                    .Where<Client>(c => c.ClientID == value)
-                    .Count<Client>() < 1)
+                    .Where(c => c.ClientID == value)
+                    .Count() < 1)
                 {
                     return;
                 }
-
-                _account.ClientID = value;
-                RaisePropertyChanged(ClientIDPropertyName);
-////////////////// need test!!!
                 if (Client != null)
                     Client.Accounts.Remove(_account);
-
-                Client = _dataService.All<Client>().
-                    Where<Client>(c => c.ClientID == value).Single<Client>();
+                Client = _dataService.All<Client>()
+                    .Where(c => c.ClientID == value).Single();
                 Client.Accounts.Add(_account);
+                RaisePropertyChanged(ClientIDPropertyName);
             }
         }
 
@@ -181,14 +139,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the Client property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual Client Client
+        public Client Client
         {
             get
             {
                 return _account.Client;
             }
 
-            set
+            protected set
             {
                 if (_account.Client == value)
                 {
@@ -209,14 +167,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the InetOrders property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual ICollection<InetOrder> InetOrders
+        public ICollection<InetOrder> InetOrders
         {
             get
             {
                 return _account.InetOrders;
             }
 
-            set
+            protected set
             {
                 if (_account.InetOrders == value)
                 {
@@ -237,7 +195,7 @@ namespace CourseProject.ViewModel
         /// Sets and gets the Refills property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual ICollection<Refill> Refills
+        public ICollection<Refill> Refills
         {
             get
             {
@@ -256,7 +214,7 @@ namespace CourseProject.ViewModel
             }
         }
 
-        public bool RefillCash();
-        public bool PayCash();
+        //public bool RefillCash(); //go to refill view
+        //public bool PayCash();    //go to payment view
     }
 }

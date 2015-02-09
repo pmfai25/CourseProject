@@ -13,6 +13,7 @@ namespace CourseProject.ViewModel
     public class AddressViewModel : ViewModelBase
     {
         private Address _address;
+
         /// <summary>
         /// Initializes a new instance of the AddressViewModel class.
         /// </summary>
@@ -22,30 +23,13 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="AddressID" /> property's name.
-        /// </summary>
-        public const string AddressIDPropertyName = "AddressID";
-
-        /// <summary>
-        /// Sets and gets the AddressID property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the AddressID property.
         /// </summary>
         public int AddressID
         {
             get
             {
                 return _address.AddressID;
-            }
-
-            set
-            {
-                if (_address.AddressID == value)
-                {
-                    return;
-                }
-
-                _address.AddressID = value;
-                RaisePropertyChanged(AddressIDPropertyName);
             }
         }
 
@@ -162,30 +146,13 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="InetOrders" /> property's name.
+        /// Gets the InetOrders property. 
         /// </summary>
-        public const string InetOrdersPropertyName = "InetOrders";
-
-        /// <summary>
-        /// Sets and gets the InetOrders property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public virtual ICollection<InetOrder> InetOrders
+        public ICollection<InetOrder> InetOrders
         {
             get
             {
                 return _address.InetOrders;
-            }
-
-            set
-            {
-                if (_address.InetOrders == value)
-                {
-                    return;
-                }
-
-                _address.InetOrders = value;
-                RaisePropertyChanged(InetOrdersPropertyName);
             }
         }
     }

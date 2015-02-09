@@ -1,6 +1,7 @@
 ﻿using CourseProject.Model;
 using GalaSoft.MvvmLight;
 using System;
+using System.Linq;
 
 namespace CourseProject.ViewModel
 {
@@ -13,40 +14,31 @@ namespace CourseProject.ViewModel
     public class RefillViewModel : ViewModelBase
     {
         private Refill _refill;
+        private IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the RefillViewModel class.
         /// </summary>
-        public RefillViewModel(Refill refill)
+        //public RefillViewModel(Refill refill)
+        //{
+        //    _refill = refill;
+        //    _refill = _dataService.All<Refill>().First();
+        //}
+
+        public RefillViewModel(IDataService dataService) //version for design
         {
-            _refill = refill;
+            _dataService = dataService;
+            _refill = _dataService.All<Refill>().First();
         }
 
         /// <summary>
-        /// The <see cref="RefillID" /> property's name.
-        /// </summary>
-        public const string RefillIDPropertyName = "RefillID";
-
-        /// <summary>
-        /// Sets and gets the RefillID property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the RefillID property. 
         /// </summary>
         public int RefillID
         {
             get
             {
                 return _refill.RefillID;
-            }
-
-            set
-            {
-                if (_refill.RefillID == value)
-                {
-                    return;
-                }
-
-                _refill.RefillID = value;
-                RaisePropertyChanged(RefillIDPropertyName);
             }
         }
 
@@ -68,12 +60,19 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_refill.AccountID == value)
+                if (_refill.AccountID == value ||
+                    value <= 0 ||
+                    _dataService.All<Account>()
+                    .Where(a => a.AccountID == value)
+                    .Count() < 1)
                 {
                     return;
                 }
-
-                _refill.AccountID = value;
+                if (Account != null)
+                    Account.Refills.Remove(_refill);
+                Account = _dataService.All<Account>()
+                    .Where(a => a.AccountID == value).Single();
+                Account.Refills.Add(_refill);
                 RaisePropertyChanged(AccountIDPropertyName);
             }
         }
@@ -143,14 +142,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the Account property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual Account Account
+        public Account Account
         {
             get
             {
                 return _refill.Account;
             }
 
-            set
+            protected set
             {
                 if (_refill.Account == value)
                 {

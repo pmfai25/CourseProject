@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using PasswordSecurity;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseProject.ViewModel
 {
@@ -14,40 +15,25 @@ namespace CourseProject.ViewModel
     public class EmployeeViewModel : ViewModelBase
     {
         private Employee _employee;
+        private IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the EmployeeViewModel class.
         /// </summary>
-        public EmployeeViewModel(Employee employee)
+        public EmployeeViewModel(IDataService dataService, Employee employee)
         {
             _employee = employee;
+            _dataService = dataService;
         }
 
         /// <summary>
-        /// The <see cref="EmployeeID" /> property's name.
-        /// </summary>
-        public const string EmployeeIDPropertyName = "EmployeeID";
-
-        /// <summary>
-        /// Sets and gets the EmployeeID property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the EmployeeID property.
         /// </summary>
         public int EmployeeID
         {
             get
             {
                 return _employee.EmployeeID;
-            }
-
-            set
-            {
-                if (_employee.EmployeeID == value)
-                {
-                    return;
-                }
-
-                _employee.EmployeeID = value;
-                RaisePropertyChanged(EmployeeIDPropertyName);
             }
         }
 
@@ -69,14 +55,20 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_employee.PositionID == value)
+                if (_employee.PositionID == value ||
+                    value <= 0 ||
+                    _dataService.All<Position>()
+                    .Where(p => p.PositionID == value)
+                    .Count() < 1)
                 {
                     return;
                 }
-
-                _employee.PositionID = value;
+                if (Position != null)
+                    Position.Employees.Remove(_employee);
+                Position = _dataService.All<Position>()
+                    .Where(p => p.PositionID == value).Single();
+                Position.Employees.Add(_employee);
                 RaisePropertyChanged(PositionIDPropertyName);
-                RaisePropertyChanged(PositionPropertyName);
             }
         }
 
@@ -252,14 +244,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the Position property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual Position Position
+        public Position Position
         {
             get
             {
                 return _employee.Position;
             }
 
-            set
+            protected set
             {
                 if (_employee.Position == value)
                 {
@@ -268,46 +260,22 @@ namespace CourseProject.ViewModel
 
                 _employee.Position = value;
                 RaisePropertyChanged(PositionPropertyName);
-                RaisePropertyChanged(PositionIDPropertyName);
             }
         }
 
         /// <summary>
-        /// The <see cref="InetOrdersCreated" /> property's name.
+        /// Gets the InetOrdersCreated property.
         /// </summary>
-        public const string InetOrdersCreatedPropertyName = "InetOrdersCreated";
-
-        /// <summary>
-        /// Sets and gets the InetOrdersCreated property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public virtual ICollection<InetOrder> InetOrdersCreated
+        public ICollection<InetOrder> InetOrdersCreated
         {
             get
             {
                 return _employee.InetOrders;
             }
-
-            //protected set
-            //{
-            //    if (_employee.InetOrders == value)
-            //    {
-            //        return;
-            //    }
-
-            //    _employee.InetOrders = value;
-            //    RaisePropertyChanged(InetOrdersCreatedPropertyName);
-            //}
         }
 
         /// <summary>
-        /// The <see cref="InetOrdersUpdated" /> property's name.
-        /// </summary>
-        public const string InetOrdersUpdatedPropertyName = "InetOrdersUpdated";
-
-        /// <summary>
-        /// Sets and gets the InetOrdersUpdated property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the InetOrdersUpdated property. 
         /// </summary>
         public ICollection<InetOrder> InetOrdersUpdated
         {
@@ -315,17 +283,6 @@ namespace CourseProject.ViewModel
             {
                 return _employee.InetOrders1;
             }
-
-            //protected set
-            //{
-            //    if (_employee.InetOrders1 == value)
-            //    {
-            //        return;
-            //    }
-
-            //    _employee.InetOrders1 = value;
-            //    RaisePropertyChanged(InetOrdersUpdatedPropertyName);
-            //}
         }
     }
 }

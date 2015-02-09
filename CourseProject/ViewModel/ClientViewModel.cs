@@ -23,29 +23,13 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="ClientID" /> property's name.
-        /// </summary>
-        public const string ClientIDPropertyName = "ClientID";
-
-        /// <summary>
-        /// Sets and gets the ClientID property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the ClientID property.
         /// </summary>
         public int ClientID
         {
             get
             {
                 return _client.ClientID;
-            }
-
-            set
-            {
-                if (_client.ClientID == value)
-                {
-                    return;
-                }
-                _client.ClientID = value;
-                RaisePropertyChanged(ClientIDPropertyName);
             }
         }
 
@@ -221,23 +205,23 @@ namespace CourseProject.ViewModel
         /// Sets and gets the Accounts property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual ICollection<Account> Accounts
+        public ICollection<Account> Accounts
         {
             get
             {
                 return _client.Accounts;
             }
 
-            //protected set
-            //{
-            //    if (_client.Accounts == value)
-            //    {
-            //        return;
-            //    }
+            protected set
+            {
+                if (_client.Accounts == value)
+                {
+                    return;
+                }
 
-            //    _client.Accounts = value;
-            //    RaisePropertyChanged(AccountsPropertyName);
-            //}
+                _client.Accounts = value;
+                RaisePropertyChanged(AccountsPropertyName);
+            }
         }
 
     }

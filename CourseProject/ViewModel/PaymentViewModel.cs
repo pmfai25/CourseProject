@@ -1,6 +1,7 @@
 ﻿using CourseProject.Model;
 using GalaSoft.MvvmLight;
 using System;
+using System.Linq;
 
 namespace CourseProject.ViewModel
 {
@@ -13,39 +14,27 @@ namespace CourseProject.ViewModel
     public class PaymentViewModel : ViewModelBase
     {
         private Payment _payment;
+        private IDataService _dataService;
         /// <summary>
         /// Initializes a new instance of the PaymentViewModel class.
         /// </summary>
-        public PaymentViewModel(Payment payment)
+        public PaymentViewModel(IDataService dataService, Payment payment)
         {
             _payment = payment;
+            _dataService = dataService;
+            //move next code to save command
+            if (!_dataService.All<Payment>().Contains(_payment))
+                PaymentTime = DateTime.Now;
         }
 
         /// <summary>
-        /// The <see cref="PaymentID" /> property's name.
-        /// </summary>
-        public const string PaymentIDPropertyName = "PaymentID";
-
-        /// <summary>
-        /// Sets and gets the PaymentID property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the PaymentID property.
         /// </summary>
         public int PaymentID
         {
             get
             {
                 return _payment.PaymentID;
-            }
-
-            set
-            {
-                if (_payment.PaymentID == value)
-                {
-                    return;
-                }
-
-                _payment.PaymentID = value;
-                RaisePropertyChanged(PaymentIDPropertyName);
             }
         }
 
@@ -67,24 +56,25 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_payment.OrderID == value)
+                if (_payment.OrderID == value ||
+                    value <= 0 ||
+                    _dataService.All<InetOrder>()
+                    .Where(o => o.InetOrderID == value)
+                    .Count() < 1)
                 {
                     return;
                 }
-
-                _payment.OrderID = value;
+                if (InetOrder != null)
+                    InetOrder.Payments.Remove(_payment);
+                InetOrder = _dataService.All<InetOrder>()
+                    .Where(o => o.InetOrderID == value).Single();
+                InetOrder.Payments.Add(_payment);
                 RaisePropertyChanged(OrderIDPropertyName);
             }
         }
 
         /// <summary>
-        /// The <see cref="PaymentTime" /> property's name.
-        /// </summary>
-        public const string PaymentTimePropertyName = "PaymentTime";
-
-        /// <summary>
-        /// Sets and gets the PaymentTime property.
-        /// Changes to that property's value raise the PropertyChanged event. 
+        /// Gets the PaymentTime property. 
         /// </summary>
         public Nullable<System.DateTime> PaymentTime
         {
@@ -93,15 +83,9 @@ namespace CourseProject.ViewModel
                 return _payment.PaymentTime;
             }
 
-            set
+            protected set
             {
-                if (_payment.PaymentTime == value)
-                {
-                    return;
-                }
-
                 _payment.PaymentTime = value;
-                RaisePropertyChanged(PaymentTimePropertyName);
             }
         }
 
@@ -142,14 +126,14 @@ namespace CourseProject.ViewModel
         /// Sets and gets the InetOrder property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public virtual InetOrder InetOrder
+        public InetOrder InetOrder
         {
             get
             {
                 return _payment.InetOrder;
             }
 
-            set
+            protected set
             {
                 if (_payment.InetOrder == value)
                 {
