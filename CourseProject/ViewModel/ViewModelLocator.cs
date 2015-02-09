@@ -39,6 +39,7 @@ namespace CourseProject.ViewModel
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<RefillViewModel>();
         }
 
         /// <summary>
@@ -52,6 +53,20 @@ namespace CourseProject.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Refill property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public RefillViewModel Refill
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<RefillViewModel>();
             }
         }
 

@@ -9,10 +9,12 @@ namespace CourseProject.Design
     public class DesignDataService : IDataService
     {
         private List<Client> _clients;
+        private List<Refill> _refills;
 
         public DesignDataService()
         {
             _clients = new List<Client>();
+            _refills = new List<Refill>();
             Client c = new Client()
             {
                 ClientID = 1,
@@ -25,12 +27,31 @@ namespace CourseProject.Design
                 Username = "funky"
             };
             _clients.Add(c);
+            Account a = new Account()
+            {
+                AccountID = 1,
+                Client = c,
+                ClientID = c.ClientID,
+                Cash = 20,
+                DebtCeiling = 0
+            };
+            Refill r = new Refill()
+            {
+                RefillID = 228,
+                AccountID = a.AccountID,
+                RefillTime = DateTime.Now,
+                Cash = 100,
+                Account = a
+            };
+            _refills.Add(r);
         }
 
         public IQueryable<T> All<T>() where T : class
         {
             if (typeof(T) == typeof(Client))
                 return (IQueryable<T>)_clients.AsQueryable();
+            if (typeof(T) == typeof(Refill))
+                return (IQueryable<T>)_refills.AsQueryable();
 
             return null;
         }
@@ -39,6 +60,8 @@ namespace CourseProject.Design
         {
             if (typeof(T) == typeof(Client))
                 return (IQueryable<T>)_clients.AsQueryable();
+            if (typeof(T) == typeof(Refill))
+                return (IQueryable<T>)_refills.AsQueryable();
 
             return null;
         }
