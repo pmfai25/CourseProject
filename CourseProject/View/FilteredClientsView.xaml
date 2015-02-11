@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="CourseProject.View.FilteredClientsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        xmlns:local="clr-namespace:CourseProject.ViewModel"
+        DataContext="{Binding FilteredClients, Source={StaticResource Locator}}">
+
+    <DockPanel>
+        <TreeView ItemsSource="{Binding Regions}">
+            <TreeView.ItemContainerStyle>
+                <!-- This Style binds a TreeViewItem to a TreeViewItemViewModel. -->
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <TreeView.Resources>
+                <HierarchicalDataTemplate 
+                    DataType="{x:Type local:ClientViewModel}" 
+                    ItemsSource="{Binding Children}"
+                    >
+                    <StackPanel Orientation="Horizontal">
+                        <!--Image Width="16" Height="16" Margin="3,0" Source="Images\Region.png" /-->
+                        <TextBlock Text="{Binding LastName}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate 
+                    DataType="{x:Type local:AccountViewModel}" 
+                    ItemsSource="{Binding Children}"
+                    >
+                    <StackPanel Orientation="Horizontal">
+                        <!--Image Width="16" Height="16" Margin="3,0" Source="Images\State.png" /-->
+                        <TextBlock Text="{Binding AccountID}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
+                <DataTemplate DataType="{x:Type local:InetOrderViewModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <!--Image Width="16" Height="16" Margin="3,0" Source="Images\City.png" /-->
+                        <TextBlock Text="{Binding InetOrderID}" />
+                    </StackPanel>
+                </DataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+    </DockPanel>
+</UserControl>

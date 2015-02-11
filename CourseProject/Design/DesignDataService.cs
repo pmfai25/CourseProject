@@ -66,6 +66,8 @@ namespace CourseProject.Design
             return null;
         }
 
+        public void SaveChanges() { }
+
         public void Dispose() {}
 
         //public void GetData(Action<DataItem, Exception> callback)

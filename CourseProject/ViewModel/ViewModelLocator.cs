@@ -40,6 +40,8 @@ namespace CourseProject.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<RefillViewModel>();
+            SimpleIoc.Default.Register<ClientViewModel>();
+            SimpleIoc.Default.Register<FilteredClientsViewModel>();
         }
 
         /// <summary>
@@ -67,6 +69,34 @@ namespace CourseProject.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<RefillViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Client property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ClientViewModel Client
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ClientViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the FilteredClients property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public FilteredClientsViewModel FilteredClients
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<FilteredClientsViewModel>();
             }
         }
 

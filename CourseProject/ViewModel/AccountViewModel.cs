@@ -12,17 +12,30 @@ namespace CourseProject.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class AccountViewModel : ViewModelBase
+    public class AccountViewModel : TreeViewItemViewModel
     {
         private Account _account;
-        private IDataService _dataService;
+        //private IDataService _dataService;
+
         /// <summary>
         /// Initializes a new instance of the AccountViewModel class.
         /// </summary>
-        public AccountViewModel(IDataService dataService, Account account)
+        //public AccountViewModel(IDataService dataService, Account account)
+        //{
+        //    _dataService = dataService;
+        //    _account = account;
+        //}
+
+        public AccountViewModel(Account account, ClientViewModel parrentClient)
+            : base(parrentClient, true)
         {
-            _dataService = dataService;
             _account = account;
+        }
+
+        protected override void LoadChildren()
+        {
+            foreach (InetOrder order in _account.InetOrders)
+                base.Children.Add(new InetOrderViewModel(order, this));
         }
 
         /// <summary>
@@ -52,23 +65,23 @@ namespace CourseProject.ViewModel
                 return _account.ClientID;
             }
 
-            set
-            {
-                if (_account.ClientID == value ||
-                    value <= 0 ||
-                    _dataService.All<Client>()
-                    .Where(c => c.ClientID == value)
-                    .Count() < 1)
-                {
-                    return;
-                }
-                if (Client != null)
-                    Client.Accounts.Remove(_account);
-                Client = _dataService.All<Client>()
-                    .Where(c => c.ClientID == value).Single();
-                Client.Accounts.Add(_account);
-                RaisePropertyChanged(ClientIDPropertyName);
-            }
+            //set
+            //{
+            //    if (_account.ClientID == value ||
+            //        value <= 0 ||
+            //        _dataService.All<Client>()
+            //        .Where(c => c.ClientID == value)
+            //        .Count() < 1)
+            //    {
+            //        return;
+            //    }
+            //    if (Client != null)
+            //        Client.Accounts.Remove(_account);
+            //    Client = _dataService.All<Client>()
+            //        .Where(c => c.ClientID == value).Single();
+            //    Client.Accounts.Add(_account);
+            //    RaisePropertyChanged(ClientIDPropertyName);
+            //}
         }
 
         /// <summary>

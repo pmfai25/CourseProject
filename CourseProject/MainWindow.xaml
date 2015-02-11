@@ -6,9 +6,9 @@
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
         Height="300"
-        Width="300"
+        
         Title="MVVM Light Application"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        DataContext="{Binding Main, Source={StaticResource Locator}}" d:DesignWidth="607.5">
     
     <Window.Resources>
         <ResourceDictionary>
@@ -20,13 +20,18 @@
 
     <Grid x:Name="LayoutRoot">
 
-        <TextBlock FontSize="36"
+        <ComboBox ItemsSource="{Binding ModelNames}" 
+                  SelectedItem="{Binding SelectedModel}"
+                  Width="90"
+                  Height="20" Margin="10,10,500,239"/>
+        <ContentControl Content="{Binding FilteredClientsViewModel}" Margin="10,45,500,96" />
+        <!--<TextBlock FontSize="22"
                    FontWeight="Bold"
                    Foreground="Purple"
                    Text="{Binding WelcomeTitle}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
-                   TextWrapping="Wrap" />
+                   TextWrapping="Wrap" />-->
 
     </Grid>
 </Window>

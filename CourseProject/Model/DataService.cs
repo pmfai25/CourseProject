@@ -7,7 +7,7 @@ namespace CourseProject.Model
 {
     public class DataService : IDataService
     {
-        private readonly InetProviderEntities _entities;
+        private InetProviderEntities _entities;
 
         public DataService()
         {
@@ -27,6 +27,11 @@ namespace CourseProject.Model
                 result = result.Include(item);
             }
             return result;
+        }
+
+        public void SaveChanges()
+        {
+            _entities.SaveChanges();
         }
 
         public void Dispose()

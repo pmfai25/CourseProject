@@ -12,27 +12,33 @@ namespace CourseProject.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class InetOrderViewModel : ViewModelBase
+    public class InetOrderViewModel : TreeViewItemViewModel
     {
         private InetOrder _inetOrder;
-        private IDataService _dataService;
+        //private IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the InetOrderViewModel class.
         /// </summary>
-        public InetOrderViewModel(IDataService dataService, InetOrder inetOrder)
+        //public InetOrderViewModel(IDataService dataService, InetOrder inetOrder)
+        //{
+        //    _inetOrder = inetOrder;
+        //    _dataService = dataService;
+        //    //move next code to save command
+        //    if (_dataService.All<InetOrder>().Contains(_inetOrder))
+        //    {
+        //        _inetOrder.UpdatedAt = DateTime.Now;
+        //        //EmployeeUpdated = current user
+        //        return;
+        //    }
+        //    _inetOrder.CreatedAt = DateTime.Now;
+        //    //EmployeeCreated = current user
+        //}
+
+        public InetOrderViewModel(InetOrder inetOrder, AccountViewModel parrentAccount)
+            : base(parrentAccount, false)
         {
             _inetOrder = inetOrder;
-            _dataService = dataService;
-            //move next code to save command
-            if (_dataService.All<InetOrder>().Contains(_inetOrder))
-            {
-                _inetOrder.UpdatedAt = DateTime.Now;
-                //EmployeeUpdated = current user
-                return;
-            }
-            _inetOrder.CreatedAt = DateTime.Now;
-            //EmployeeCreated = current user
         }
 
         /// <summary>
@@ -62,23 +68,23 @@ namespace CourseProject.ViewModel
                 return _inetOrder.AccountID;
             }
 
-            set
-            {
-                if (_inetOrder.AccountID == value ||
-                    value <= 0 ||
-                    _dataService.All<Account>()
-                    .Where(a => a.AccountID == value)
-                    .Count() < 1)
-                {
-                    return;
-                }
-                if (Account != null)
-                    Account.InetOrders.Remove(_inetOrder);
-                Account = _dataService.All<Account>()
-                    .Where(a => a.AccountID == value).Single();
-                Account.InetOrders.Add(_inetOrder);
-                RaisePropertyChanged(AccountIDPropertyName);
-            }
+            //set
+            //{
+            //    if (_inetOrder.AccountID == value ||
+            //        value <= 0 ||
+            //        _dataService.All<Account>()
+            //        .Where(a => a.AccountID == value)
+            //        .Count() < 1)
+            //    {
+            //        return;
+            //    }
+            //    if (Account != null)
+            //        Account.InetOrders.Remove(_inetOrder);
+            //    Account = _dataService.All<Account>()
+            //        .Where(a => a.AccountID == value).Single();
+            //    Account.InetOrders.Add(_inetOrder);
+            //    RaisePropertyChanged(AccountIDPropertyName);
+            //}
         }
 
         /// <summary>
@@ -97,23 +103,23 @@ namespace CourseProject.ViewModel
                 return _inetOrder.TariffID;
             }
 
-            set
-            {
-                if (_inetOrder.TariffID == value ||
-                    value <= 0 ||
-                    _dataService.All<Tariff>()
-                    .Where(t => t.TariffID == value)
-                    .Count() < 1)
-                {
-                    return;
-                }
-                if (Tariff != null)
-                    Tariff.InetOrders.Remove(_inetOrder);
-                Tariff = _dataService.All<Tariff>()
-                    .Where(t => t.TariffID == value).Single();
-                Tariff.InetOrders.Add(_inetOrder);
-                RaisePropertyChanged(TariffIDPropertyName);
-            }
+            //set
+            //{
+            //    if (_inetOrder.TariffID == value ||
+            //        value <= 0 ||
+            //        _dataService.All<Tariff>()
+            //        .Where(t => t.TariffID == value)
+            //        .Count() < 1)
+            //    {
+            //        return;
+            //    }
+            //    if (Tariff != null)
+            //        Tariff.InetOrders.Remove(_inetOrder);
+            //    Tariff = _dataService.All<Tariff>()
+            //        .Where(t => t.TariffID == value).Single();
+            //    Tariff.InetOrders.Add(_inetOrder);
+            //    RaisePropertyChanged(TariffIDPropertyName);
+            //}
         }
 
         /// <summary>
@@ -307,23 +313,23 @@ namespace CourseProject.ViewModel
                 return _inetOrder.AddressID;
             }
 
-            set
-            {
-                if (_inetOrder.AddressID == value ||
-                    value <= 0 ||
-                    _dataService.All<Address>()
-                    .Where(a => a.AddressID == value)
-                    .Count() < 1)
-                {
-                    return;
-                }
-                if (Address != null)
-                    Address.InetOrders.Remove(_inetOrder);
-                Address = _dataService.All<Address>()
-                    .Where(a => a.AddressID == value).Single();
-                Address.InetOrders.Add(_inetOrder);
-                RaisePropertyChanged(AddressIDPropertyName);
-            }
+            //set
+            //{
+            //    if (_inetOrder.AddressID == value ||
+            //        value <= 0 ||
+            //        _dataService.All<Address>()
+            //        .Where(a => a.AddressID == value)
+            //        .Count() < 1)
+            //    {
+            //        return;
+            //    }
+            //    if (Address != null)
+            //        Address.InetOrders.Remove(_inetOrder);
+            //    Address = _dataService.All<Address>()
+            //        .Where(a => a.AddressID == value).Single();
+            //    Address.InetOrders.Add(_inetOrder);
+            //    RaisePropertyChanged(AddressIDPropertyName);
+            //}
         }
 
         /// <summary>

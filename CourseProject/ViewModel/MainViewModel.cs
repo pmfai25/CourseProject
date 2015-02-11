@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using CourseProject.Model;
 using System.Linq;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace CourseProject.ViewModel
 {
@@ -15,53 +17,129 @@ namespace CourseProject.ViewModel
         private IDataService _dataService;
 
         /// <summary>
-        /// The <see cref="WelcomeTitle" /> property's name.
-        /// </summary>
-        public const string WelcomeTitlePropertyName = "WelcomeTitle";
-
-        private string _welcomeTitle = string.Empty;
-
-        /// <summary>
-        /// Gets the WelcomeTitle property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public string WelcomeTitle
-        {
-            get
-            {
-                return _welcomeTitle;
-            }
-
-            set
-            {
-                if (_welcomeTitle == value)
-                {
-                    return;
-                }
-
-                _welcomeTitle = value;
-                RaisePropertyChanged(WelcomeTitlePropertyName);
-            }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            //_dataService.GetData(
-            //    (item, error) =>
-            //    {
-            //        if (error != null)
-            //        {
-            //            // Report error here
-            //            return;
-            //        }
+            _modelNames = new ObservableCollection<string>() { "Client", "Tariff", "Address" };
+            var cs  = new ObservableCollection<ClientViewModel>();
+            foreach (var c in _dataService.All<Client>())
+            {
+                cs.Add(new ClientViewModel(c));
+            }
+            _clients = new FilteredClientsViewModel(cs);
+        }
 
-            //        WelcomeTitle = item.Title;
-            //    });
-            WelcomeTitle = _dataService.All<Client>().First().FirstName;
+        /// <summary>
+        /// The <see cref="Clients" /> property's name.
+        /// </summary>
+        public const string ClientsPropertyName = "Clients";
+
+        private FilteredClientsViewModel _clients;
+
+        /// <summary>
+        /// Sets and gets the Clients property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public FilteredClientsViewModel Clients
+        {
+            get
+            {
+                return _clients;
+            }
+
+            set
+            {
+                if (_clients == value)
+                {
+                    return;
+                }
+
+                _clients = value;
+                RaisePropertyChanged(ClientsPropertyName);
+            }
+        }
+
+        private ObservableCollection<string> _modelNames;
+
+        /// <summary>
+        /// Gets the ModelNames property. 
+        /// </summary>
+        public ObservableCollection<string> ModelNames
+        {
+            get
+            {
+                return _modelNames;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SelectedModel" /> property's name.
+        /// </summary>
+        public const string SelectedModelPropertyName = "SelectedModel";
+
+        private string _selectedModel;
+
+        /// <summary>
+        /// Sets and gets the SelectedModel property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string SelectedModel
+        {
+            get
+            {
+                return _selectedModel;
+            }
+
+            set
+            {
+                if (_selectedModel == value)
+                {
+                    return;
+                }
+                if (value == "Client")
+                {
+                    SelectedModelCollection = Clients;
+                }
+                //if (value == "Tariff")
+                //{
+
+                //}
+
+                _selectedModel = value;
+                RaisePropertyChanged(SelectedModelPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SelectedModelCollection" /> property's name.
+        /// </summary>
+        public const string SelectedModelCollectionPropertyName = "SelectedModelCollection";
+
+        private ViewModelBase _selectedModelCollection;
+
+        /// <summary>
+        /// Sets and gets the SelectedModelCollection property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ViewModelBase SelectedModelCollection
+        {
+            get
+            {
+                return _selectedModelCollection;
+            }
+
+            set
+            {
+                if (_selectedModelCollection == value)
+                {
+                    return;
+                }
+
+                _selectedModelCollection = value;
+                RaisePropertyChanged(SelectedModelCollectionPropertyName);
+            }
         }
 
         ////public override void Cleanup()

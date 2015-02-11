@@ -2,6 +2,8 @@
 using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 using PasswordSecurity;
+using System.Linq;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace CourseProject.ViewModel
 {
@@ -11,15 +13,38 @@ namespace CourseProject.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ClientViewModel : ViewModelBase
+    public class ClientViewModel : TreeViewItemViewModel
     {
         private Client _client;
+        //private IDataService _dataService;
+
+        //public RelayCommand SaveCommand { get; protected set; }
+
+        //private void SaveChanges()
+        //{
+        //    _dataService.SaveChanges();
+        //}
+
         /// <summary>
         /// Initializes a new instance of the ClientViewModel class.
         /// </summary>
-        public ClientViewModel(Client client)
+        //public ClientViewModel(IDataService dataService)//, Client client)
+        //{
+        //    //_client = client;
+        //    _dataService = dataService;
+        //    _client = _dataService.All<Client>().First();
+        //    SaveCommand = new RelayCommand(SaveChanges);
+        //}
+
+        public ClientViewModel(Client client) : base(null, true)
         {
             _client = client;
+        }
+
+        protected override void LoadChildren()
+        {
+            foreach (Account account in _client.Accounts)
+                base.Children.Add(new AccountViewModel(account, this));
         }
 
         /// <summary>
