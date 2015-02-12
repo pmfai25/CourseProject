@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:v="clr-namespace:CourseProject.View"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
         Height="300"
+        Width="300"
         
         Title="MVVM Light Application"
         DataContext="{Binding Main, Source={StaticResource Locator}}" d:DesignWidth="607.5">
@@ -19,12 +21,13 @@
     </Window.Resources>
 
     <Grid x:Name="LayoutRoot">
-
+        <StackPanel>
         <ComboBox ItemsSource="{Binding ModelNames}" 
                   SelectedItem="{Binding SelectedModel}"
                   Width="90"
-                  Height="20" Margin="10,10,500,239"/>
-        <ContentControl Content="{Binding FilteredClientsViewModel}" Margin="10,45,500,96" />
+                  Height="20"/>
+        <ContentControl Content="{Binding SelectedModelCollection}" />
+        <!--v:FilteredClientsView Margin="10,54,-10,-54" /-->
         <!--<TextBlock FontSize="22"
                    FontWeight="Bold"
                    Foreground="Purple"
@@ -32,6 +35,6 @@
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    TextWrapping="Wrap" />-->
-
+        </StackPanel>
     </Grid>
 </Window>

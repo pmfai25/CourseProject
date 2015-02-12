@@ -58,6 +58,14 @@ namespace CourseProject.ViewModel
             }
         }
 
+        public string FullName
+        {
+            get
+            {
+                return string.Format("{0} {1} {2}", LastName, FirstName, MiddleName);
+            }
+        }
+
         /// <summary>
         /// The <see cref="FirstName" /> property's name.
         /// </summary>

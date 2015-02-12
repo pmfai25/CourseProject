@@ -23,12 +23,12 @@ namespace CourseProject.ViewModel
         {
             _dataService = dataService;
             _modelNames = new ObservableCollection<string>() { "Client", "Tariff", "Address" };
-            var cs  = new ObservableCollection<ClientViewModel>();
-            foreach (var c in _dataService.All<Client>())
-            {
-                cs.Add(new ClientViewModel(c));
-            }
-            _clients = new FilteredClientsViewModel(cs);
+            //var cs  = new ObservableCollection<ClientViewModel>();
+            //foreach (var c in _dataService.All<Client>())
+            //{
+            //    cs.Add(new ClientViewModel(c));
+            //}
+            _clients = new FilteredClientsViewModel(null);
         }
 
         /// <summary>

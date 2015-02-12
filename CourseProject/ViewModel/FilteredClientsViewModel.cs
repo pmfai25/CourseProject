@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using CourseProject.Model;
+using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 
 namespace CourseProject.ViewModel
@@ -11,12 +12,14 @@ namespace CourseProject.ViewModel
     /// </summary>
     public class FilteredClientsViewModel : ViewModelBase
     {
+        private IDataService _dataService;
         /// <summary>
         /// Initializes a new instance of the FilteredClientsViewModel class.
         /// </summary>
-        public FilteredClientsViewModel(ObservableCollection<ClientViewModel> clients)
+        public FilteredClientsViewModel(IDataService dataService)
         {
-            _clients = clients;
+            _dataService = dataService;
+            //_clients = clients;
         }
 
         /// <summary>
@@ -24,7 +27,8 @@ namespace CourseProject.ViewModel
         /// </summary>
         public const string ClientsPropertyName = "Clients";
 
-        private ObservableCollection<ClientViewModel> _clients;
+        private ObservableCollection<ClientViewModel> _clients =
+            new ObservableCollection<ClientViewModel>();
 
         /// <summary>
         /// Sets and gets the Clients property.
@@ -34,19 +38,24 @@ namespace CourseProject.ViewModel
         {
             get
             {
+                _clients.Clear();
+                foreach (var c in _dataService.All<Client>())
+                {
+                    _clients.Add(new ClientViewModel(c));
+                }
                 return _clients;
             }
 
-            set
-            {
-                if (_clients == value)
-                {
-                    return;
-                }
+            //set
+            //{
+            //    if (_clients == value)
+            //    {
+            //        return;
+            //    }
 
-                _clients = value;
-                RaisePropertyChanged(ClientsPropertyName);
-            }
+            //    _clients = value;
+            //    RaisePropertyChanged(ClientsPropertyName);
+            //}
         }
     }
 }

@@ -8,8 +8,8 @@
         xmlns:local="clr-namespace:CourseProject.ViewModel"
         DataContext="{Binding FilteredClients, Source={StaticResource Locator}}">
 
-    <DockPanel>
-        <TreeView ItemsSource="{Binding Regions}">
+    <StackPanel>
+        <TreeView ItemsSource="{Binding Clients}">
             <TreeView.ItemContainerStyle>
                 <!-- This Style binds a TreeViewItem to a TreeViewItemViewModel. -->
                 <Style TargetType="{x:Type TreeViewItem}">
@@ -31,7 +31,7 @@
                     >
                     <StackPanel Orientation="Horizontal">
                         <!--Image Width="16" Height="16" Margin="3,0" Source="Images\Region.png" /-->
-                        <TextBlock Text="{Binding LastName}" />
+                        <TextBlock Text="{Binding FullName}" />
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
@@ -41,6 +41,7 @@
                     >
                     <StackPanel Orientation="Horizontal">
                         <!--Image Width="16" Height="16" Margin="3,0" Source="Images\State.png" /-->
+                        <TextBlock Text="Account ID: " />
                         <TextBlock Text="{Binding AccountID}" />
                     </StackPanel>
                 </HierarchicalDataTemplate>
@@ -48,10 +49,12 @@
                 <DataTemplate DataType="{x:Type local:InetOrderViewModel}">
                     <StackPanel Orientation="Horizontal">
                         <!--Image Width="16" Height="16" Margin="3,0" Source="Images\City.png" /-->
+                        <TextBlock Text="Order ID: " />
                         <TextBlock Text="{Binding InetOrderID}" />
                     </StackPanel>
                 </DataTemplate>
             </TreeView.Resources>
         </TreeView>
-    </DockPanel>
+        <TextBlock Text="blaaaaaaaaaa" />
+    </StackPanel>
 </UserControl>

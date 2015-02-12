@@ -13,6 +13,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using CourseProject.Model;
+using System;
+using System.Collections.ObjectModel;
 
 namespace CourseProject.ViewModel
 {
@@ -37,10 +39,9 @@ namespace CourseProject.ViewModel
             {
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
-
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<RefillViewModel>();
-            SimpleIoc.Default.Register<ClientViewModel>();
+            //SimpleIoc.Default.Register<RefillViewModel>();
+            //SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<FilteredClientsViewModel>();
         }
 
