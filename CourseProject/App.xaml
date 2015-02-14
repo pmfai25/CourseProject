@@ -6,14 +6,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              StartupUri="MainWindow.xaml" mc:Ignorable="d">
-  <Application.Resources>
-    <!--Global View Model Locator-->
-    <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-    <!--<DataTemplate DataType="{x:Type vm:ClientViewModel}">
+    <Application.Resources>
+        <!--Global View Model Locator-->
+        <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+        <!--<DataTemplate DataType="{x:Type vm:ClientViewModel}">
             <vw:ClientView />
         </DataTemplate>-->
-    <DataTemplate DataType="{x:Type vm:FilteredClientsViewModel}">
-      <vw:FilteredClientsView />
-    </DataTemplate>
-  </Application.Resources>
+        <DataTemplate DataType="{x:Type vm:FilteredClientsViewModel}">
+            <vw:FilteredClientsView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ClientViewModel}">
+            <vw:ClientView />
+        </DataTemplate>
+    </Application.Resources>
 </Application>

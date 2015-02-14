@@ -1,5 +1,6 @@
 ﻿using CourseProject.Model;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using System.Collections.ObjectModel;
 
 namespace CourseProject.ViewModel
@@ -56,6 +57,49 @@ namespace CourseProject.ViewModel
             //    _clients = value;
             //    RaisePropertyChanged(ClientsPropertyName);
             //}
+        }
+
+        /// <summary>
+        /// The <see cref="SelectedItem" /> property's name.
+        /// </summary>
+        public const string SelectedItemPropertyName = "SelectedItem";
+
+        private ViewModelBase _selectedItem;
+
+        /// <summary>
+        /// Sets and gets the SelectedItem property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ViewModelBase SelectedItem
+        {
+            get
+            {
+                foreach(var c in _clients)
+                {
+                    _selectedItem = c.FindSelected();
+                    if (_selectedItem != null)
+                        return _selectedItem;
+                }
+                return null;
+            }
+        }
+
+        private RelayCommand _selectItemCommand;
+
+        /// <summary>
+        /// Gets the MyCommand.
+        /// </summary>
+        public RelayCommand SelectItemCommand
+        {
+            get
+            {
+                return _selectItemCommand
+                    ?? (_selectItemCommand = new RelayCommand(
+                    () =>
+                    {
+                        RaisePropertyChanged(SelectedItemPropertyName);
+                    }));
+            }
         }
     }
 }

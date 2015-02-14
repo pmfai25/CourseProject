@@ -161,6 +161,24 @@ namespace CourseProject.ViewModel
 
         #endregion // Parent
 
+        public TreeViewItemViewModel FindSelected()
+        {
+            if (_isSelected)
+                return this;
+            if (!_isExpanded)
+                return null;
+            if (_children == null)
+                return null;
+            TreeViewItemViewModel selected = null;
+            foreach (var child in _children)
+            {
+                selected = child.FindSelected();
+                if (selected != null)
+                    return selected;
+            }
+            return null;
+        }
+
         #endregion // Presentation Members
     }
 }

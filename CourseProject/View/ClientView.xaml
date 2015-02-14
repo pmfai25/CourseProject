@@ -8,9 +8,7 @@
         DataContext="{Binding Client, Source={StaticResource Locator}}">
 
     <StackPanel>
-        <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top"
-                  ItemsSource="{Binding AllClients}"/>
-        <Button Content="Save changes" Command="{Binding SaveCommand}" Width="100"/>
+        <TextBlock Text="{Binding FullName}" />
     </StackPanel>
     
 </UserControl>
