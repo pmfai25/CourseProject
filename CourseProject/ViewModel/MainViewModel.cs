@@ -3,6 +3,7 @@ using CourseProject.Model;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using CourseProject.ViewModel.TreeView;
 
 namespace CourseProject.ViewModel
 {
@@ -28,7 +29,7 @@ namespace CourseProject.ViewModel
             //{
             //    cs.Add(new ClientViewModel(c));
             //}
-            _clients = new FilteredClientsViewModel(null);
+            _clients = new ClientTreeViewModel(null);
         }
 
         /// <summary>
@@ -36,13 +37,13 @@ namespace CourseProject.ViewModel
         /// </summary>
         public const string ClientsPropertyName = "Clients";
 
-        private FilteredClientsViewModel _clients;
+        private ClientTreeViewModel _clients;
 
         /// <summary>
         /// Sets and gets the Clients property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public FilteredClientsViewModel Clients
+        public ClientTreeViewModel Clients
         {
             get
             {

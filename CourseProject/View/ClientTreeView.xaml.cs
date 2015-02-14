@@ -4,14 +4,14 @@ using System.Windows.Controls;
 namespace CourseProject.View
 {
     /// <summary>
-    /// Description for FilteredClientsView.
+    /// Description for ClientTreeView.
     /// </summary>
-    public partial class FilteredClientsView : UserControl
+    public partial class ClientTreeView : UserControl
     {
         /// <summary>
-        /// Initializes a new instance of the FilteredClientsView class.
+        /// Initializes a new instance of the ClientTreeView class.
         /// </summary>
-        public FilteredClientsView()
+        public ClientTreeView()
         {
             InitializeComponent();
         }

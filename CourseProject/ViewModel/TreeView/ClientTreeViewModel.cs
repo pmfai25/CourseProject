@@ -1,9 +1,10 @@
 ﻿using CourseProject.Model;
+using CourseProject.ViewModel.TreeView;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Collections.ObjectModel;
 
-namespace CourseProject.ViewModel
+namespace CourseProject.ViewModel.TreeView
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.
@@ -11,16 +12,15 @@ namespace CourseProject.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class FilteredClientsViewModel : ViewModelBase
+    public class ClientTreeViewModel : ViewModelBase
     {
         private IDataService _dataService;
         /// <summary>
         /// Initializes a new instance of the FilteredClientsViewModel class.
         /// </summary>
-        public FilteredClientsViewModel(IDataService dataService)
+        public ClientTreeViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            //_clients = clients;
         }
 
         /// <summary>
@@ -28,21 +28,21 @@ namespace CourseProject.ViewModel
         /// </summary>
         public const string ClientsPropertyName = "Clients";
 
-        private ObservableCollection<ClientViewModel> _clients =
-            new ObservableCollection<ClientViewModel>();
+        private ObservableCollection<ClientItemViewModel> _clients =
+            new ObservableCollection<ClientItemViewModel>();
 
         /// <summary>
         /// Sets and gets the Clients property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ObservableCollection<ClientViewModel> Clients
+        public ObservableCollection<ClientItemViewModel> Clients
         {
             get
             {
                 _clients.Clear();
                 foreach (var c in _dataService.All<Client>())
                 {
-                    _clients.Add(new ClientViewModel(c));
+                    _clients.Add(new ClientItemViewModel(c));
                 }
                 return _clients;
             }

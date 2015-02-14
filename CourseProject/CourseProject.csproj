@@ -144,20 +144,23 @@
     <Compile Include="ViewModel\AddressViewModel.cs" />
     <Compile Include="ViewModel\ClientViewModel.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
-    <Compile Include="ViewModel\FilteredClientsViewModel.cs" />
+    <Compile Include="ViewModel\TreeView\ClientTreeViewModel.cs" />
     <Compile Include="ViewModel\InetOrderViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PaymentViewModel.cs" />
     <Compile Include="ViewModel\PositionViewModel.cs" />
     <Compile Include="ViewModel\RefillViewModel.cs" />
     <Compile Include="ViewModel\TariffViewModel.cs" />
-    <Compile Include="ViewModel\TreeViewItemViewModel.cs" />
+    <Compile Include="ViewModel\TreeView\AccountItemViewModel.cs" />
+    <Compile Include="ViewModel\TreeView\ClientItemViewModel.cs" />
+    <Compile Include="ViewModel\TreeView\InetOrderItemViewModel.cs" />
+    <Compile Include="ViewModel\TreeView\TreeViewItemViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\ClientTreeView.xaml.cs">
+      <DependentUpon>ClientTreeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ClientView.xaml.cs">
       <DependentUpon>ClientView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\FilteredClientsView.xaml.cs">
-      <DependentUpon>FilteredClientsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RefillView.xaml.cs">
       <DependentUpon>RefillView.xaml</DependentUpon>
@@ -178,11 +181,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ClientView.xaml">
+    <Page Include="View\ClientTreeView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FilteredClientsView.xaml">
+    <Page Include="View\ClientView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

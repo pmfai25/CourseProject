@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 
-namespace CourseProject.ViewModel
+namespace CourseProject.ViewModel.TreeView
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.

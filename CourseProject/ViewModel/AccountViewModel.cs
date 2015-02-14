@@ -12,30 +12,45 @@ namespace CourseProject.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class AccountViewModel : TreeViewItemViewModel
+    public class AccountViewModel : ViewModelBase
     {
-        private Account _account;
-        //private IDataService _dataService;
+        private IDataService _dataService;
 
-        /// <summary>
-        /// Initializes a new instance of the AccountViewModel class.
-        /// </summary>
-        //public AccountViewModel(IDataService dataService, Account account)
-        //{
-        //    _dataService = dataService;
-        //    _account = account;
-        //}
-
-        public AccountViewModel(Account account, ClientViewModel parrentClient)
-            : base(parrentClient, true)
+        public AccountViewModel(IDataService dataService)
         {
-            _account = account;
+            _dataService = dataService;
+            //_account = _dataService.All<Account>().First();
+            _account = new Account();
         }
 
-        protected override void LoadChildren()
+        /// <summary>
+        /// The <see cref="Account" /> property's name.
+        /// </summary>
+        public const string AccountPropertyName = "Account";
+
+        private Account _account;
+
+        /// <summary>
+        /// Sets and gets the Account property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public Account Account
         {
-            foreach (InetOrder order in _account.InetOrders)
-                base.Children.Add(new InetOrderViewModel(order, this));
+            get
+            {
+                return _account;
+            }
+
+            set
+            {
+                if (_account == value)
+                {
+                    return;
+                }
+
+                _account = value;
+                RaisePropertyChanged(AccountPropertyName);
+            }
         }
 
         /// <summary>

@@ -13,38 +13,48 @@ namespace CourseProject.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ClientViewModel : TreeViewItemViewModel
+    public class ClientViewModel : ViewModelBase
     {
-        private Client _client;
-        //private IDataService _dataService;
-
-        //public RelayCommand SaveCommand { get; protected set; }
-
-        //private void SaveChanges()
-        //{
-        //    _dataService.SaveChanges();
-        //}
+        private IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the ClientViewModel class.
         /// </summary>
-        //public ClientViewModel(IDataService dataService)//, Client client)
-        //{
-        //    //_client = client;
-        //    _dataService = dataService;
-        //    _client = _dataService.All<Client>().First();
-        //    SaveCommand = new RelayCommand(SaveChanges);
-        //}
-
-        public ClientViewModel(Client client) : base(null, true)
+        public ClientViewModel(IDataService dataService)
         {
-            _client = client;
+            _dataService = dataService;
+            //_client = _dataService.All<Client>().First();
+            _client = new Client();
         }
 
-        protected override void LoadChildren()
+        /// <summary>
+        /// The <see cref="Client" /> property's name.
+        /// </summary>
+        public const string ClientPropertyName = "Client";
+
+        private Client _client;
+
+        /// <summary>
+        /// Sets and gets the Client property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public Client Client
         {
-            foreach (Account account in _client.Accounts)
-                base.Children.Add(new AccountViewModel(account, this));
+            get
+            {
+                return _client;
+            }
+
+            set
+            {
+                if (_client == value)
+                {
+                    return;
+                }
+
+                _client = value;
+                RaisePropertyChanged(ClientPropertyName);
+            }
         }
 
         /// <summary>
@@ -55,14 +65,6 @@ namespace CourseProject.ViewModel
             get
             {
                 return _client.ClientID;
-            }
-        }
-
-        public string FullName
-        {
-            get
-            {
-                return string.Format("{0} {1} {2}", LastName, FirstName, MiddleName);
             }
         }
 

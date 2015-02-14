@@ -15,6 +15,7 @@ using Microsoft.Practices.ServiceLocation;
 using CourseProject.Model;
 using System;
 using System.Collections.ObjectModel;
+using CourseProject.ViewModel.TreeView;
 
 namespace CourseProject.ViewModel
 {
@@ -42,7 +43,7 @@ namespace CourseProject.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             //SimpleIoc.Default.Register<RefillViewModel>();
             //SimpleIoc.Default.Register<ClientViewModel>();
-            SimpleIoc.Default.Register<FilteredClientsViewModel>();
+            SimpleIoc.Default.Register<ClientTreeViewModel>();
         }
 
         /// <summary>
@@ -93,11 +94,11 @@ namespace CourseProject.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public FilteredClientsViewModel FilteredClients
+        public ClientTreeViewModel ClientTree
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<FilteredClientsViewModel>();
+                return ServiceLocator.Current.GetInstance<ClientTreeViewModel>();
             }
         }
 

@@ -12,10 +12,10 @@ namespace CourseProject.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class InetOrderViewModel : TreeViewItemViewModel
+    public class InetOrderViewModel : ViewModelBase
     {
         private InetOrder _inetOrder;
-        //private IDataService _dataService;
+        private IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the InetOrderViewModel class.
@@ -35,10 +35,11 @@ namespace CourseProject.ViewModel
         //    //EmployeeCreated = current user
         //}
 
-        public InetOrderViewModel(InetOrder inetOrder, AccountViewModel parrentAccount)
-            : base(parrentAccount, false)
+        public InetOrderViewModel(IDataService dataService)
         {
-            _inetOrder = inetOrder;
+            _dataService = dataService;
+            //_inetOrder = _dataService.All<InetOrder>().First();
+            _inetOrder = new InetOrder();
         }
 
         /// <summary>
