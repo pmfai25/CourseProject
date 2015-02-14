@@ -156,11 +156,17 @@
     <Compile Include="ViewModel\TreeView\InetOrderItemViewModel.cs" />
     <Compile Include="ViewModel\TreeView\TreeViewItemViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\AccountView.xaml.cs">
+      <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ClientTreeView.xaml.cs">
       <DependentUpon>ClientTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ClientView.xaml.cs">
       <DependentUpon>ClientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InetOrderView.xaml.cs">
+      <DependentUpon>InetOrderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RefillView.xaml.cs">
       <DependentUpon>RefillView.xaml</DependentUpon>
@@ -181,11 +187,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\AccountView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ClientTreeView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ClientView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InetOrderView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

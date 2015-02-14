@@ -54,6 +54,10 @@ namespace CourseProject.ViewModel
 
                 _client = value;
                 RaisePropertyChanged(ClientPropertyName);
+                RaisePropertyChanged(LastNamePropertyName);
+                RaisePropertyChanged(FirstNamePropertyName);
+                RaisePropertyChanged(MiddleNamePropertyName);
+                RaisePropertyChanged(PhonePropertyName);
             }
         }
 

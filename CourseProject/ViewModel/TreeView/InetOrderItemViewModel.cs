@@ -21,5 +21,21 @@ namespace CourseProject.ViewModel.TreeView
         {
             _inetOrder = inetOrder;
         }
+
+        public int InetOrderID
+        {
+            get
+            {
+                return _inetOrder.InetOrderID;
+            }
+        }
+
+        public override object Instance
+        {
+            get
+            {
+                return _inetOrder;
+            }
+        }
     }
 }

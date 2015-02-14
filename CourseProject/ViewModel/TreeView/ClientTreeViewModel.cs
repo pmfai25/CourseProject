@@ -1,7 +1,8 @@
 ﻿using CourseProject.Model;
-using CourseProject.ViewModel.TreeView;
+using CourseProject.ViewModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.Practices.ServiceLocation;
 using System.Collections.ObjectModel;
 
 namespace CourseProject.ViewModel.TreeView
@@ -15,12 +16,19 @@ namespace CourseProject.ViewModel.TreeView
     public class ClientTreeViewModel : ViewModelBase
     {
         private IDataService _dataService;
+        private ClientViewModel _clientVM;
+        private AccountViewModel _accountVM;
+        private InetOrderViewModel _inetOrderVM;
+
         /// <summary>
         /// Initializes a new instance of the FilteredClientsViewModel class.
         /// </summary>
         public ClientTreeViewModel(IDataService dataService)
         {
             _dataService = dataService;
+            _clientVM = ServiceLocator.Current.GetInstance<ClientViewModel>();
+            _accountVM = ServiceLocator.Current.GetInstance<AccountViewModel>();
+            _inetOrderVM = ServiceLocator.Current.GetInstance<InetOrderViewModel>();
         }
 
         /// <summary>
@@ -64,7 +72,7 @@ namespace CourseProject.ViewModel.TreeView
         /// </summary>
         public const string SelectedItemPropertyName = "SelectedItem";
 
-        private ViewModelBase _selectedItem;
+        //private ViewModelBase _selectedItem;
 
         /// <summary>
         /// Sets and gets the SelectedItem property.
@@ -74,11 +82,31 @@ namespace CourseProject.ViewModel.TreeView
         {
             get
             {
-                foreach(var c in _clients)
+                TreeViewItemViewModel selected = null;
+                foreach (var c in _clients)
                 {
-                    _selectedItem = c.FindSelected();
-                    if (_selectedItem != null)
-                        return _selectedItem;
+                    selected = c.FindSelected();
+                    if (selected != null)
+                        break;
+                }
+                if (selected == null || selected.Instance == null)
+                    return null;
+                var instance = selected.Instance;
+                var t = selected.GetType();
+                if (selected.GetType() == typeof(ClientItemViewModel))
+                {
+                    _clientVM.Client = (Client)instance;
+                    return _clientVM;
+                }
+                if (selected.GetType() == typeof(AccountItemViewModel))
+                {
+                    _accountVM.Account = (Account)instance;
+                    return _accountVM;
+                }
+                if (selected.GetType() == typeof(InetOrderItemViewModel))
+                {
+                    _inetOrderVM.InetOrder = (InetOrder)instance;
+                    return _inetOrderVM;
                 }
                 return null;
             }

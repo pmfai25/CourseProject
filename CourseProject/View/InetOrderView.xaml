@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="CourseProject.View.InetOrderView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding InetOrder, Source={StaticResource Locator}}">
+
+    <StackPanel>
+        <DockPanel>
+            <StackPanel>
+                <Label Content="Start date:" />
+                <Label Content="Finish date:" />
+                <Label Content="Is actual:" />
+                <Label Content="Automatic payment:" />
+                <Label Content="Created by:" />
+                <Label Content="Created at:" />
+                <Label Content="Updated by:" />
+                <Label Content="Updated at:" />
+            </StackPanel>
+            <StackPanel>
+                <TextBox Margin="0,4,0,4" Text="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding FinishDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding IsActual, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding AutomaticPayment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding CreatedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding CreatedAt, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding UpdatedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding UpdatedAt, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </DockPanel>
+
+    </StackPanel>
+</UserControl>

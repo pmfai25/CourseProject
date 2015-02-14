@@ -19,5 +19,11 @@
         <DataTemplate DataType="{x:Type vm:ClientViewModel}">
             <vw:ClientView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AccountViewModel}">
+            <vw:AccountView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:InetOrderViewModel}">
+            <vw:InetOrderView />
+        </DataTemplate>
     </Application.Resources>
 </Application>

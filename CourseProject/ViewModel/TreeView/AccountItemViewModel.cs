@@ -22,6 +22,22 @@ namespace CourseProject.ViewModel.TreeView
             _account = account;
         }
 
+        public int AccountID
+        {
+            get
+            {
+                return _account.AccountID;
+            }
+        }
+
+        public override object Instance
+        {
+            get
+            {
+                return _account;
+            }
+        }
+
         protected override void LoadChildren()
         {
             foreach (InetOrder order in _account.InetOrders)

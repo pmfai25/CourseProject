@@ -10,7 +10,7 @@
         xmlns:local="clr-namespace:CourseProject.ViewModel.TreeView"
         DataContext="{Binding ClientTree, Source={StaticResource Locator}}">
 
-    <StackPanel>
+    <DockPanel>
         <TreeView ItemsSource="{Binding Clients}">
             <TreeView.ItemContainerStyle>
                 <!-- This Style binds a TreeViewItem to a TreeViewItemViewModel. -->
@@ -62,5 +62,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TreeView>
-    </StackPanel>
+        
+        <ContentControl Content="{Binding SelectedItem}"/>
+    </DockPanel>
 </UserControl>

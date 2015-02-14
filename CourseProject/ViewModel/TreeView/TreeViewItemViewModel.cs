@@ -161,6 +161,14 @@ namespace CourseProject.ViewModel.TreeView
 
         #endregion // Parent
 
+        public virtual object Instance
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public TreeViewItemViewModel FindSelected()
         {
             if (_isSelected)

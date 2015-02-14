@@ -41,8 +41,10 @@ namespace CourseProject.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
             SimpleIoc.Default.Register<MainViewModel>();
-            //SimpleIoc.Default.Register<RefillViewModel>();
-            //SimpleIoc.Default.Register<ClientViewModel>();
+            SimpleIoc.Default.Register<RefillViewModel>();
+            SimpleIoc.Default.Register<AccountViewModel>();
+            SimpleIoc.Default.Register<InetOrderViewModel>();
+            SimpleIoc.Default.Register<ClientViewModel>();
             SimpleIoc.Default.Register<ClientTreeViewModel>();
         }
 
@@ -63,30 +65,30 @@ namespace CourseProject.ViewModel
         /// <summary>
         /// Gets the Refill property.
         /// </summary>
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-        //    "CA1822:MarkMembersAsStatic",
-        //    Justification = "This non-static member is needed for data binding purposes.")]
-        //public RefillViewModel Refill
-        //{
-        //    get
-        //    {
-        //        return ServiceLocator.Current.GetInstance<RefillViewModel>();
-        //    }
-        //}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public RefillViewModel Refill
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<RefillViewModel>();
+            }
+        }
 
         /// <summary>
         /// Gets the Client property.
         /// </summary>
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-        //    "CA1822:MarkMembersAsStatic",
-        //    Justification = "This non-static member is needed for data binding purposes.")]
-        //public ClientViewModel Client
-        //{
-        //    get
-        //    {
-        //        return ServiceLocator.Current.GetInstance<ClientViewModel>();
-        //    }
-        //}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ClientViewModel Client
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ClientViewModel>();
+            }
+        }
 
         /// <summary>
         /// Gets the FilteredClients property.
@@ -99,6 +101,34 @@ namespace CourseProject.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<ClientTreeViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Accounts property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public AccountViewModel Account
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AccountViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the InetOrders property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public InetOrderViewModel InetOrder
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<InetOrderViewModel>();
             }
         }
 

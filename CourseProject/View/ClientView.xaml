@@ -8,7 +8,21 @@
         DataContext="{Binding Client, Source={StaticResource Locator}}">
 
     <StackPanel>
-        <TextBlock Text="{Binding FullName}" />
+        <DockPanel>
+            <StackPanel>
+                <Label Content="Last name:" />
+                <Label Content="First name:" />
+                <Label Content="Middle name:" />
+                <Label Content="Phone:" />
+            </StackPanel>
+            <StackPanel>
+                <TextBox Margin="0,4,0,4" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </DockPanel>
+
     </StackPanel>
     
 </UserControl>

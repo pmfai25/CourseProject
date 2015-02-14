@@ -21,6 +21,14 @@ namespace CourseProject.ViewModel.TreeView
             _client = client;
         }
 
+        public override object Instance
+        {
+            get
+            {
+                return _client;
+            }
+        }
+
         public string FullName
         {
             get

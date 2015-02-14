@@ -50,6 +50,8 @@ namespace CourseProject.ViewModel
 
                 _account = value;
                 RaisePropertyChanged(AccountPropertyName);
+                RaisePropertyChanged(CashPropertyName);
+                RaisePropertyChanged(DebtCeilingPropertyName);
             }
         }
 

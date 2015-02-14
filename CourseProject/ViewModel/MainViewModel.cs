@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using CourseProject.ViewModel.TreeView;
+using Microsoft.Practices.ServiceLocation;
 
 namespace CourseProject.ViewModel
 {
@@ -24,12 +25,7 @@ namespace CourseProject.ViewModel
         {
             _dataService = dataService;
             _modelNames = new ObservableCollection<string>() { "Client", "Tariff", "Address" };
-            //var cs  = new ObservableCollection<ClientViewModel>();
-            //foreach (var c in _dataService.All<Client>())
-            //{
-            //    cs.Add(new ClientViewModel(c));
-            //}
-            _clients = new ClientTreeViewModel(null);
+            _clients = ServiceLocator.Current.GetInstance<ClientTreeViewModel>();
         }
 
         /// <summary>

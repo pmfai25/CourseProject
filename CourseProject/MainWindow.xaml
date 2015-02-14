@@ -26,9 +26,8 @@
                   SelectedItem="{Binding SelectedModel}"
                   Width="90"
                   Height="20"/>
-        <ContentControl Content="{Binding SelectedModelCollection}" />
-        <!--v:FilteredClientsView Margin="10,54,-10,-54" /-->
-        <!--<TextBlock FontSize="22"
+            <ContentControl Content="{Binding SelectedModelCollection}" />
+            <!--<TextBlock FontSize="22"
                    FontWeight="Bold"
                    Foreground="Purple"
                    Text="{Binding WelcomeTitle}"

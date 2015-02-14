@@ -43,6 +43,44 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
+        /// The <see cref="InetOrder" /> property's name.
+        /// </summary>
+        public const string InetOrderPropertyName = "InetOrder";
+
+        /// <summary>
+        /// Sets and gets the InetOrder property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public InetOrder InetOrder
+        {
+            get
+            {
+                return _inetOrder;
+            }
+
+            set
+            {
+                if (_inetOrder == value)
+                {
+                    return;
+                }
+
+                _inetOrder = value;
+                RaisePropertyChanged(InetOrderPropertyName);
+                RaisePropertyChanged(StartDatePropertyName);
+                RaisePropertyChanged(FinishDatePropertyName);
+                RaisePropertyChanged(IsActualPropertyName);
+                RaisePropertyChanged(AutomaticPaymentPropertyName);
+                RaisePropertyChanged(EmployeeCreatedPropertyName);
+                RaisePropertyChanged(EmployeeUpdatedPropertyName);
+                RaisePropertyChanged(CreatedAtPropertyName);
+                RaisePropertyChanged(CreatedByPropertyName);
+                RaisePropertyChanged(UpdatedAtPropertyName);
+                RaisePropertyChanged(UpdatedByPropertyName);
+            }
+        }
+
+        /// <summary>
         /// Gets the InetOrderID property.
         /// </summary>
         public int InetOrderID
@@ -236,6 +274,11 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
+        /// The <see cref="CreatedBy" /> property's name.
+        /// </summary>
+        public const string CreatedByPropertyName = "CreatedBy";
+
+        /// <summary>
         /// Gets the CreatedBy property.
         /// </summary>
         public Nullable<int> CreatedBy
@@ -245,6 +288,11 @@ namespace CourseProject.ViewModel
                 return _inetOrder.CreatedBy;
             }
         }
+
+        /// <summary>
+        /// The <see cref="CreatedAt" /> property's name.
+        /// </summary>
+        public const string CreatedAtPropertyName = "CreatedAt";
 
         /// <summary>
         /// Gets the CreatedAt property. 
@@ -258,6 +306,11 @@ namespace CourseProject.ViewModel
                 return _inetOrder.CreatedAt;
             }
         }
+
+        /// <summary>
+        /// The <see cref="UpdatedBy" /> property's name.
+        /// </summary>
+        public const string UpdatedByPropertyName = "UpdatedBy";
 
         /// <summary>
         /// Gets the UpdatedBy property.
