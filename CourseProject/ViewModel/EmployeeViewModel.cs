@@ -1,5 +1,6 @@
 ﻿using CourseProject.Model;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using PasswordSecurity;
 using System.Collections.Generic;
 using System.Linq;
@@ -263,8 +264,32 @@ namespace CourseProject.ViewModel
 
             set
             {
-                _employee.Password = PasswordHash.CreateHash(value);
+                _employee.Password = value;//PasswordHash.CreateHash(value);
                 RaisePropertyChanged(PasswordPropertyName);
+            }
+        }
+
+        private RelayCommand _saveCommand;
+
+        /// <summary>
+        /// Gets the MyCommand.
+        /// </summary>
+        public RelayCommand SaveCommand
+        {
+            get
+            {
+                return _saveCommand
+                    ?? (_saveCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!SaveCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+
+                        _dataService.SaveChanges();
+                    },
+                    () => true));
             }
         }
 
