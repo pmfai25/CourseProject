@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="Model\Account.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
@@ -93,10 +94,12 @@
     <Compile Include="Model\Client.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
-    <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Model\DataItem.cs" />
+    <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\Employee.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\InetOrder.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
@@ -115,9 +118,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InetProvider.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataItem.cs" />
-    <Compile Include="Model\DataService.cs" />
-    <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\Payment.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
@@ -137,6 +137,12 @@
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Tariff.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\vClientOrder.cs">
+      <DependentUpon>InetProvider.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\vEmployeeOrders1.cs">
       <DependentUpon>InetProvider.tt</DependentUpon>
     </Compile>
     <Compile Include="PasswordHash.cs" />

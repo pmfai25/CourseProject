@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="InetProviderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="InetProviderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AccountID" />
@@ -33,8 +33,8 @@
           <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -46,8 +46,8 @@
           <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="InetOrder">
           <Key>
@@ -113,6 +113,38 @@
           <Property Name="TariffName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'InetProvider.dbo.vClientOrders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vClientOrders">
+          <Key>
+            <PropertyRef Name="InetOrderID" />
+          </Key>
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="InetOrderID" Type="int" Nullable="false" />
+          <Property Name="IsActual" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'InetProvider.dbo.vEmployeeOrders1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vEmployeeOrders1">
+          <Key>
+            <PropertyRef Name="InetOrderID" />
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="InetOrderID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="TariffID" Type="int" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="FinishDate" Type="date" />
+          <Property Name="IsActual" Type="bit" />
+          <Property Name="AutomaticPayment" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedAt" Type="datetime" />
+          <Property Name="AddressID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="View_1">
           <Property Name="first_name" Type="nvarchar" MaxLength="50" />
@@ -132,7 +164,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Job">
+        <Association Name="FK_Employee_Position">
           <End Role="Position" Type="Self.Position" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
@@ -156,19 +188,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="AccountID" />
-            </Principal>
-            <Dependent Role="InetOrder">
-              <PropertyRef Name="AccountID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Employee">
+        <Association Name="FK_InetOrder_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -180,7 +200,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Employee1">
+        <Association Name="FK_InetOrder_Employee1">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -189,6 +209,18 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             </Principal>
             <Dependent Role="InetOrder">
               <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="InetOrder">
+              <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -270,11 +302,36 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
           <EntitySet Name="Refill" EntityType="Self.Refill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tariff" EntityType="Self.Tariff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vClientOrders" EntityType="Self.vClientOrders" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vClientOrders].[LastName] AS [LastName], 
+    [vClientOrders].[FirstName] AS [FirstName], 
+    [vClientOrders].[MiddleName] AS [MiddleName], 
+    [vClientOrders].[InetOrderID] AS [InetOrderID], 
+    [vClientOrders].[IsActual] AS [IsActual]
+    FROM [dbo].[vClientOrders] AS [vClientOrders]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vEmployeeOrders1" EntityType="Self.vEmployeeOrders1" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vEmployeeOrders1].[InetOrderID] AS [InetOrderID], 
+    [vEmployeeOrders1].[AccountID] AS [AccountID], 
+    [vEmployeeOrders1].[TariffID] AS [TariffID], 
+    [vEmployeeOrders1].[StartDate] AS [StartDate], 
+    [vEmployeeOrders1].[FinishDate] AS [FinishDate], 
+    [vEmployeeOrders1].[IsActual] AS [IsActual], 
+    [vEmployeeOrders1].[AutomaticPayment] AS [AutomaticPayment], 
+    [vEmployeeOrders1].[CreatedBy] AS [CreatedBy], 
+    [vEmployeeOrders1].[CreatedAt] AS [CreatedAt], 
+    [vEmployeeOrders1].[UpdatedBy] AS [UpdatedBy], 
+    [vEmployeeOrders1].[UpdatedAt] AS [UpdatedAt], 
+    [vEmployeeOrders1].[AddressID] AS [AddressID]
+    FROM [dbo].[vEmployeeOrders1] AS [vEmployeeOrders1]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Account_Client" Association="Self.FK_Account_Client">
             <End Role="Client" EntitySet="Client" />
             <End Role="Account" EntitySet="Account" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Job" Association="Self.FK_Employee_Job">
+          <AssociationSet Name="FK_Employee_Position" Association="Self.FK_Employee_Position">
             <End Role="Position" EntitySet="Position" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
@@ -282,16 +339,16 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             <End Role="Address" EntitySet="Address" />
             <End Role="InetOrder" EntitySet="InetOrder" />
           </AssociationSet>
+          <AssociationSet Name="FK_InetOrder_Employee" Association="Self.FK_InetOrder_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="InetOrder" EntitySet="InetOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InetOrder_Employee1" Association="Self.FK_InetOrder_Employee1">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="InetOrder" EntitySet="InetOrder" />
+          </AssociationSet>
           <AssociationSet Name="FK_Order_Account" Association="Self.FK_Order_Account">
             <End Role="Account" EntitySet="Account" />
-            <End Role="InetOrder" EntitySet="InetOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Employee" Association="Self.FK_Order_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="InetOrder" EntitySet="InetOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Employee1" Association="Self.FK_Order_Employee1">
-            <End Role="Employee" EntitySet="Employee" />
             <End Role="InetOrder" EntitySet="InetOrder" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Tariff" Association="Self.FK_Order_Tariff">
@@ -311,7 +368,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="InetProviderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="InetProviderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AccountID" />
@@ -344,8 +401,8 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Client" FromRole="Client" ToRole="Account" />
         </EntityType>
         <EntityType Name="Employee">
@@ -358,11 +415,11 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Position" Relationship="Self.FK_Employee_Job" FromRole="Employee" ToRole="Position" />
-          <NavigationProperty Name="InetOrders" Relationship="Self.FK_Order_Employee" FromRole="Employee" ToRole="InetOrder" />
-          <NavigationProperty Name="InetOrders1" Relationship="Self.FK_Order_Employee1" FromRole="Employee" ToRole="InetOrder" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Position" Relationship="Self.FK_Employee_Position" FromRole="Employee" ToRole="Position" />
+          <NavigationProperty Name="InetOrders" Relationship="Self.FK_InetOrder_Employee" FromRole="Employee" ToRole="InetOrder" />
+          <NavigationProperty Name="InetOrders1" Relationship="Self.FK_InetOrder_Employee1" FromRole="Employee" ToRole="InetOrder" />
         </EntityType>
         <EntityType Name="InetOrder">
           <Key>
@@ -382,8 +439,8 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
           <Property Name="AddressID" Type="Int32" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Order_Account" FromRole="InetOrder" ToRole="Account" />
           <NavigationProperty Name="Address" Relationship="Self.FK_InetOrder_Address" FromRole="InetOrder" ToRole="Address" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Order_Employee" FromRole="InetOrder" ToRole="Employee" />
-          <NavigationProperty Name="Employee1" Relationship="Self.FK_Order_Employee1" FromRole="InetOrder" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_InetOrder_Employee" FromRole="InetOrder" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="Self.FK_InetOrder_Employee1" FromRole="InetOrder" ToRole="Employee" />
           <NavigationProperty Name="Tariff" Relationship="Self.FK_Order_Tariff" FromRole="InetOrder" ToRole="Tariff" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Order" FromRole="InetOrder" ToRole="Payment" />
         </EntityType>
@@ -404,7 +461,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
           <Property Name="PositionID" Type="Int32" Nullable="false" />
           <Property Name="PositionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Job" FromRole="Position" ToRole="Employee" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Position" FromRole="Position" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Refill">
           <Key>
@@ -436,6 +493,34 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TariffName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="InetOrders" Relationship="Self.FK_Order_Tariff" FromRole="Tariff" ToRole="InetOrder" />
+        </EntityType>
+        <EntityType Name="vClientOrder">
+          <Key>
+            <PropertyRef Name="InetOrderID" />
+          </Key>
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InetOrderID" Type="Int32" Nullable="false" />
+          <Property Name="IsActual" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="vEmployeeOrders1">
+          <Key>
+            <PropertyRef Name="InetOrderID" />
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="InetOrderID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="TariffID" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="FinishDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActual" Type="Boolean" />
+          <Property Name="AutomaticPayment" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="AddressID" Type="Int32" />
         </EntityType>
         <Association Name="FK_Account_Client">
           <End Role="Client" Type="Self.Client" Multiplicity="1" />
@@ -485,7 +570,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Job">
+        <Association Name="FK_Employee_Position">
           <End Role="Position" Type="Self.Position" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
@@ -497,7 +582,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Employee">
+        <Association Name="FK_InetOrder_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -509,7 +594,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Employee1">
+        <Association Name="FK_InetOrder_Employee1">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="InetOrder" Type="Self.InetOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -545,7 +630,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="InetProviderEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="InetProviderEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="Clients" EntityType="Self.Client" />
@@ -556,6 +641,8 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
           <EntitySet Name="Refills" EntityType="Self.Refill" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Tariffs" EntityType="Self.Tariff" />
+          <EntitySet Name="vClientOrders" EntityType="Self.vClientOrder" />
+          <EntitySet Name="vEmployeeOrders1" EntityType="Self.vEmployeeOrders1" />
           <AssociationSet Name="FK_Account_Client" Association="Self.FK_Account_Client">
             <End Role="Client" EntitySet="Clients" />
             <End Role="Account" EntitySet="Accounts" />
@@ -572,15 +659,15 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
             <End Role="Address" EntitySet="Addresses" />
             <End Role="InetOrder" EntitySet="InetOrders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Job" Association="Self.FK_Employee_Job">
+          <AssociationSet Name="FK_Employee_Position" Association="Self.FK_Employee_Position">
             <End Role="Position" EntitySet="Positions" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Employee" Association="Self.FK_Order_Employee">
+          <AssociationSet Name="FK_InetOrder_Employee" Association="Self.FK_InetOrder_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="InetOrder" EntitySet="InetOrders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Employee1" Association="Self.FK_Order_Employee1">
+          <AssociationSet Name="FK_InetOrder_Employee1" Association="Self.FK_InetOrder_Employee1">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="InetOrder" EntitySet="InetOrders" />
           </AssociationSet>
@@ -639,7 +726,7 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="InetProviderModelStoreContainer" CdmEntityContainer="InetProviderEntities">
+        <EntityContainerMapping StorageEntityContainer="InetProviderModelStoreContainer" CdmEntityContainer="InetProviderEntities1">
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="InetProviderModel.Account">
               <MappingFragment StoreEntitySet="Account">
@@ -754,6 +841,35 @@ warning 6013: The table/view 'InetProvider.dbo.View_1' does not have a primary k
                 <ScalarProperty Name="Speed" ColumnName="Speed" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="TariffName" ColumnName="TariffName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vClientOrders">
+            <EntityTypeMapping TypeName="InetProviderModel.vClientOrder">
+              <MappingFragment StoreEntitySet="vClientOrders">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="InetOrderID" ColumnName="InetOrderID" />
+                <ScalarProperty Name="IsActual" ColumnName="IsActual" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEmployeeOrders1">
+            <EntityTypeMapping TypeName="InetProviderModel.vEmployeeOrders1">
+              <MappingFragment StoreEntitySet="vEmployeeOrders1">
+                <ScalarProperty Name="InetOrderID" ColumnName="InetOrderID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="TariffID" ColumnName="TariffID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="FinishDate" ColumnName="FinishDate" />
+                <ScalarProperty Name="IsActual" ColumnName="IsActual" />
+                <ScalarProperty Name="AutomaticPayment" ColumnName="AutomaticPayment" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

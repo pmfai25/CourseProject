@@ -18,7 +18,7 @@ namespace CourseProject.Model
     public partial class InetProviderEntities : DbContext
     {
         public InetProviderEntities()
-            : base("name=InetProviderEntities")
+            : base("name=InetProviderEntities1")
         {
         }
     
@@ -37,6 +37,8 @@ namespace CourseProject.Model
         public virtual DbSet<Refill> Refills { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tariff> Tariffs { get; set; }
+        public virtual DbSet<vClientOrder> vClientOrders { get; set; }
+        public virtual DbSet<vEmployeeOrders1> vEmployeeOrders1 { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

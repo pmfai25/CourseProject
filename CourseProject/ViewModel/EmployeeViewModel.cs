@@ -264,7 +264,7 @@ namespace CourseProject.ViewModel
 
             set
             {
-                _employee.Password = value;//PasswordHash.CreateHash(value);
+                _employee.Password = PasswordHash.CreateHash(value);
                 RaisePropertyChanged(PasswordPropertyName);
             }
         }

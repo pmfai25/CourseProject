@@ -19,7 +19,7 @@ namespace CourseProject.Model
             this.InetOrders = new HashSet<InetOrder>();
             this.InetOrders1 = new HashSet<InetOrder>();
         }
-
+    
         public int EmployeeID { get; set; }
         public int PositionID { get; set; }
         public string FirstName { get; set; }
