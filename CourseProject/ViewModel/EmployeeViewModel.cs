@@ -14,16 +14,49 @@ namespace CourseProject.ViewModel
     /// </summary>
     public class EmployeeViewModel : ViewModelBase
     {
-        private Employee _employee;
         private IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the EmployeeViewModel class.
         /// </summary>
-        public EmployeeViewModel(IDataService dataService, Employee employee)
+        public EmployeeViewModel(IDataService dataService)
         {
-            _employee = employee;
+            _employee = new Employee();
             _dataService = dataService;
+        }
+
+        /// <summary>
+        /// The <see cref="Employee" /> property's name.
+        /// </summary>
+        public const string EmployeePropertyName = "Employee";
+
+        private Employee _employee;
+
+        /// <summary>
+        /// Sets and gets the Employee property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public Employee Employee
+        {
+            get
+            {
+                return _employee;
+            }
+
+            set
+            {
+                if (_employee == value)
+                {
+                    return;
+                }
+
+                _employee = value;
+                RaisePropertyChanged(EmployeePropertyName);
+                RaisePropertyChanged(LastNamePropertyName);
+                RaisePropertyChanged(FirstNamePropertyName);
+                RaisePropertyChanged(MiddleNamePropertyName);
+                RaisePropertyChanged(PhonePropertyName);
+            }
         }
 
         /// <summary>

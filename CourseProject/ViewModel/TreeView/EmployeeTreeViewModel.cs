@@ -1,5 +1,4 @@
 ﻿using CourseProject.Model;
-using CourseProject.ViewModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Practices.ServiceLocation;
@@ -13,57 +12,56 @@ namespace CourseProject.ViewModel.TreeView
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ClientTreeViewModel : ViewModelBase
+    public class EmployeeTreeViewModel : ViewModelBase
     {
         private IDataService _dataService;
-        private ClientViewModel _clientVM;
-        private AccountViewModel _accountVM;
+        private EmployeeViewModel _employeeVM;
         private InetOrderViewModel _inetOrderVM;
 
         /// <summary>
-        /// Initializes a new instance of the FilteredClientsViewModel class.
+        /// Initializes a new instance of the EmployeeTreeViewModel class.
         /// </summary>
-        public ClientTreeViewModel(IDataService dataService)
+        public EmployeeTreeViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            _clientVM = ServiceLocator.Current.GetInstance<ClientViewModel>();
-            _accountVM = ServiceLocator.Current.GetInstance<AccountViewModel>();
+            _employeeVM = ServiceLocator.Current.GetInstance<EmployeeViewModel>();
             _inetOrderVM = ServiceLocator.Current.GetInstance<InetOrderViewModel>();
         }
 
         /// <summary>
-        /// The <see cref="Clients" /> property's name.
+        /// The <see cref="Employees" /> property's name.
         /// </summary>
-        public const string ClientsPropertyName = "Clients";
+        public const string EmployeesPropertyName = "Employees";
 
-        private List<ClientItemViewModel> _clients =
-            new List<ClientItemViewModel>();
+        private List<EmployeeItemViewModel> _employees =
+            new List<EmployeeItemViewModel>();
+
 
         /// <summary>
-        /// Sets and gets the Clients property.
+        /// Sets and gets the Employees property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public List<ClientItemViewModel> Clients
+        public List<EmployeeItemViewModel> Employees
         {
             get
             {
-                _clients.Clear();
-                foreach (var c in _dataService.All<Client>())
+                _employees.Clear();
+                foreach (var e in _dataService.All<Employee>())
                 {
-                    _clients.Add(new ClientItemViewModel(c));
+                    _employees.Add(new EmployeeItemViewModel(e));
                 }
-                return _clients;
+                return _employees;
             }
 
             //set
             //{
-            //    if (_clients == value)
+            //    if (_employees == value)
             //    {
             //        return;
             //    }
 
-            //    _clients = value;
-            //    RaisePropertyChanged(ClientsPropertyName);
+            //    _employees = value;
+            //    RaisePropertyChanged(EmployeesPropertyName);
             //}
         }
 
@@ -83,9 +81,9 @@ namespace CourseProject.ViewModel.TreeView
             get
             {
                 TreeViewItemViewModel selected = null;
-                foreach (var c in _clients)
+                foreach (var e in _employees)
                 {
-                    selected = c.FindSelected();
+                    selected = e.FindSelected();
                     if (selected != null)
                         break;
                 }
@@ -93,15 +91,10 @@ namespace CourseProject.ViewModel.TreeView
                     return null;
                 var instance = selected.Instance;
                 var t = selected.GetType();
-                if (selected.GetType() == typeof(ClientItemViewModel))
+                if (selected.GetType() == typeof(EmployeeItemViewModel))
                 {
-                    _clientVM.Client = (Client)instance;
-                    return _clientVM;
-                }
-                if (selected.GetType() == typeof(AccountItemViewModel))
-                {
-                    _accountVM.Account = (Account)instance;
-                    return _accountVM;
+                    _employeeVM.Employee = (Employee)instance;
+                    return _employeeVM;
                 }
                 if (selected.GetType() == typeof(InetOrderItemViewModel))
                 {

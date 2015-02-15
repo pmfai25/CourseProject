@@ -23,7 +23,6 @@ namespace CourseProject.ViewModel
         public ClientViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            //_client = _dataService.All<Client>().First();
             _client = new Client();
         }
 

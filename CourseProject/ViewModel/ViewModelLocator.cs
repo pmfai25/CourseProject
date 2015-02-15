@@ -45,7 +45,10 @@ namespace CourseProject.ViewModel
             SimpleIoc.Default.Register<AccountViewModel>();
             SimpleIoc.Default.Register<InetOrderViewModel>();
             SimpleIoc.Default.Register<ClientViewModel>();
+            SimpleIoc.Default.Register<UserViewModel>();
             SimpleIoc.Default.Register<ClientTreeViewModel>();
+            SimpleIoc.Default.Register<EmployeeViewModel>();
+            SimpleIoc.Default.Register<EmployeeTreeViewModel>();
         }
 
         /// <summary>
@@ -129,6 +132,48 @@ namespace CourseProject.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<InetOrderViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the User property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public UserViewModel User
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UserViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Employee property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public EmployeeViewModel Employee
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<EmployeeViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the EmployeeTree property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public EmployeeTreeViewModel EmployeeTree
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<EmployeeTreeViewModel>();
             }
         }
 

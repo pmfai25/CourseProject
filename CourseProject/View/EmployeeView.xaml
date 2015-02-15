@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="CourseProject.View.EmployeeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding Employee, Source={StaticResource Locator}}">
+
+    <StackPanel>
+        <DockPanel>
+            <StackPanel>
+                <Label Content="Last name:" />
+                <Label Content="First name:" />
+                <Label Content="Middle name:" />
+                <Label Content="Phone:" />
+            </StackPanel>
+            <StackPanel>
+                <TextBox Margin="0,4,0,4" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </DockPanel>
+
+    </StackPanel>
+</UserControl>

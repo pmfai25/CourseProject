@@ -24,46 +24,77 @@ namespace CourseProject.ViewModel
         public MainViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            _modelNames = new ObservableCollection<string>() { "Client", "Tariff", "Address" };
-            _clients = ServiceLocator.Current.GetInstance<ClientTreeViewModel>();
+            _modelNames = new List<string>() { "Client", "Employee", "Tariff", "Address" };
+            _clientTree = ServiceLocator.Current.GetInstance<ClientTreeViewModel>();
+            _employeeTree = ServiceLocator.Current.GetInstance<EmployeeTreeViewModel>();
         }
 
         /// <summary>
-        /// The <see cref="Clients" /> property's name.
+        /// The <see cref="ClientTree" /> property's name.
         /// </summary>
         public const string ClientsPropertyName = "Clients";
 
-        private ClientTreeViewModel _clients;
+        private ClientTreeViewModel _clientTree;
 
         /// <summary>
         /// Sets and gets the Clients property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ClientTreeViewModel Clients
+        public ClientTreeViewModel ClientTree
         {
             get
             {
-                return _clients;
+                return _clientTree;
             }
 
             set
             {
-                if (_clients == value)
+                if (_clientTree == value)
                 {
                     return;
                 }
 
-                _clients = value;
+                _clientTree = value;
                 RaisePropertyChanged(ClientsPropertyName);
             }
         }
 
-        private ObservableCollection<string> _modelNames;
+        /// <summary>
+        /// The <see cref="EmployeeTree" /> property's name.
+        /// </summary>
+        public const string EmployeeTreePropertyName = "EmployeeTree";
+
+        private EmployeeTreeViewModel _employeeTree;
+
+        /// <summary>
+        /// Sets and gets the EmployeeTree property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public EmployeeTreeViewModel EmployeeTree
+        {
+            get
+            {
+                return _employeeTree;
+            }
+
+            set
+            {
+                if (_employeeTree == value)
+                {
+                    return;
+                }
+
+                _employeeTree = value;
+                RaisePropertyChanged(EmployeeTreePropertyName);
+            }
+        }
+
+        private List<string> _modelNames;
 
         /// <summary>
         /// Gets the ModelNames property. 
         /// </summary>
-        public ObservableCollection<string> ModelNames
+        public List<string> ModelNames
         {
             get
             {
@@ -95,14 +126,14 @@ namespace CourseProject.ViewModel
                 {
                     return;
                 }
-                if (value == "Client")
+                if (value == _modelNames[0])
                 {
-                    SelectedModelCollection = Clients;
+                    SelectedModelTree = _clientTree;
                 }
-                //if (value == "Tariff")
-                //{
-
-                //}
+                if (value == _modelNames[1])
+                {
+                    SelectedModelTree = _employeeTree;
+                }
 
                 _selectedModel = value;
                 RaisePropertyChanged(SelectedModelPropertyName);
@@ -110,32 +141,32 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="SelectedModelCollection" /> property's name.
+        /// The <see cref="SelectedModelTree" /> property's name.
         /// </summary>
-        public const string SelectedModelCollectionPropertyName = "SelectedModelCollection";
+        public const string SelectedModelTreePropertyName = "SelectedModelTree";
 
-        private ViewModelBase _selectedModelCollection;
+        private ViewModelBase _selectedModelTree;
 
         /// <summary>
         /// Sets and gets the SelectedModelCollection property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ViewModelBase SelectedModelCollection
+        public ViewModelBase SelectedModelTree
         {
             get
             {
-                return _selectedModelCollection;
+                return _selectedModelTree;
             }
 
             set
             {
-                if (_selectedModelCollection == value)
+                if (_selectedModelTree == value)
                 {
                     return;
                 }
 
-                _selectedModelCollection = value;
-                RaisePropertyChanged(SelectedModelCollectionPropertyName);
+                _selectedModelTree = value;
+                RaisePropertyChanged(SelectedModelTreePropertyName);
             }
         }
 

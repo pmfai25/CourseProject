@@ -153,8 +153,11 @@
     <Compile Include="ViewModel\TariffViewModel.cs" />
     <Compile Include="ViewModel\TreeView\AccountItemViewModel.cs" />
     <Compile Include="ViewModel\TreeView\ClientItemViewModel.cs" />
+    <Compile Include="ViewModel\TreeView\EmployeeItemViewModel.cs" />
+    <Compile Include="ViewModel\TreeView\EmployeeTreeViewModel.cs" />
     <Compile Include="ViewModel\TreeView\InetOrderItemViewModel.cs" />
     <Compile Include="ViewModel\TreeView\TreeViewItemViewModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
@@ -165,11 +168,20 @@
     <Compile Include="View\ClientView.xaml.cs">
       <DependentUpon>ClientView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\EmployeeTreeView.xaml.cs">
+      <DependentUpon>EmployeeTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeView.xaml.cs">
+      <DependentUpon>EmployeeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\InetOrderView.xaml.cs">
       <DependentUpon>InetOrderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RefillView.xaml.cs">
       <DependentUpon>RefillView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -199,11 +211,23 @@
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\EmployeeTreeView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EmployeeView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\InetOrderView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RefillView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

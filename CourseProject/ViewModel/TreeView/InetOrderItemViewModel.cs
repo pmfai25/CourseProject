@@ -22,6 +22,12 @@ namespace CourseProject.ViewModel.TreeView
             _inetOrder = inetOrder;
         }
 
+        public InetOrderItemViewModel(InetOrder inetOrder, EmployeeItemViewModel parrentEmployee)
+            : base(parrentEmployee, false)
+        {
+            _inetOrder = inetOrder;
+        }
+
         public int InetOrderID
         {
             get

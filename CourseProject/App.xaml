@@ -7,6 +7,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              StartupUri="MainWindow.xaml" mc:Ignorable="d">
+    <!--StartupUri="View/UserView.xaml" mc:Ignorable="d"> -->
     <Application.Resources>
         <!--Global View Model Locator-->
         <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
@@ -16,8 +17,14 @@
         <DataTemplate DataType="{x:Type vmt:ClientTreeViewModel}">
             <vw:ClientTreeView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vmt:EmployeeTreeViewModel}">
+            <vw:EmployeeTreeView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:ClientViewModel}">
             <vw:ClientView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:EmployeeViewModel}">
+            <vw:EmployeeView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AccountViewModel}">
             <vw:AccountView />
