@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Linq;
 using PasswordSecurity;
+using Microsoft.Practices.ServiceLocation;
 
 namespace CourseProject.ViewModel
 {
@@ -22,6 +23,7 @@ namespace CourseProject.ViewModel
         public UserViewModel(IDataService dataService)
         {
             _dataService = dataService;
+            _currentViewModel = this;
         }
 
         /// <summary>
@@ -74,6 +76,66 @@ namespace CourseProject.ViewModel
             }
         }
 
+        /// <summary>
+        /// The <see cref="CurrentViewModel" /> property's name.
+        /// </summary>
+        public const string CurrentViewModelPropertyName = "CurrentViewModel";
+
+        private ViewModelBase _currentViewModel;
+
+        /// <summary>
+        /// Sets and gets the CurrentViewModel property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ViewModelBase CurrentViewModel
+        {
+            get
+            {
+                return _currentViewModel;
+            }
+
+            set
+            {
+                if (_currentViewModel == value)
+                {
+                    return;
+                }
+
+                _currentViewModel = value;
+                RaisePropertyChanged(CurrentViewModelPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IsLoggedIn" /> property's name.
+        /// </summary>
+        public const string IsLoggedInPropertyName = "IsLoggedIn";
+
+        private bool _isLoggedIn = false;
+
+        /// <summary>
+        /// Sets and gets the IsLoggedIn property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool IsLoggedIn
+        {
+            get
+            {
+                return _isLoggedIn;
+            }
+
+            set
+            {
+                if (_isLoggedIn == value)
+                {
+                    return;
+                }
+
+                _isLoggedIn = value;
+                RaisePropertyChanged(IsLoggedInPropertyName);
+            }
+        }
+
         private RelayCommand _logInCommand;
 
         /// <summary>
@@ -97,7 +159,8 @@ namespace CourseProject.ViewModel
                         if (employee != null &&
                             PasswordHash.ValidatePassword(_password, employee.Password))
                         {
-                            //
+                            IsLoggedIn = true;
+                            CurrentViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
                         }
                     },
                     () =>

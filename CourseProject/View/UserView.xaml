@@ -5,17 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
+        Width="180"
         DataContext="{Binding User, Source={StaticResource Locator}}">
 
     <StackPanel>
+        <TextBlock FontSize="36"
+                   FontWeight="Bold"
+                   Foreground="Purple"
+                   Text="Welcome"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap" />
         <DockPanel>
             <StackPanel>
                 <Label Content="Username:" />
                 <Label Content="Password:" />
             </StackPanel>
             <StackPanel>
-                <TextBox Margin="0,4,0,4" Text="{Binding Username, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" 
+                         Text="{Binding Username, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" 
+                         Foreground="AliceBlue"
+                         Text="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </DockPanel>
         <Button Content="Log In" Command="{Binding LogInCommand}"/>

@@ -183,6 +183,9 @@
     <Compile Include="View\InetOrderView.xaml.cs">
       <DependentUpon>InetOrderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RefillView.xaml.cs">
       <DependentUpon>RefillView.xaml</DependentUpon>
     </Compile>
@@ -226,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InetOrderView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

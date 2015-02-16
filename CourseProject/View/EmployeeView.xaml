@@ -23,7 +23,7 @@
                 <TextBox Margin="0,4,0,4" Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Margin="0,4,0,4" Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Margin="0,4,0,4" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" Foreground="AliceBlue" Text="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </DockPanel>
         

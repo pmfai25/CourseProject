@@ -11,9 +11,6 @@
     <Application.Resources>
         <!--Global View Model Locator-->
         <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-        <!--<DataTemplate DataType="{x:Type vm:ClientViewModel}">
-            <vw:ClientView />
-        </DataTemplate>-->
         <DataTemplate DataType="{x:Type vmt:ClientTreeViewModel}">
             <vw:ClientTreeView />
         </DataTemplate>
@@ -31,6 +28,12 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:InetOrderViewModel}">
             <vw:InetOrderView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UserViewModel}">
+            <vw:UserView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MainViewModel}">
+            <vw:MainView />
         </DataTemplate>
     </Application.Resources>
 </Application>

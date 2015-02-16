@@ -57,6 +57,8 @@ namespace CourseProject.ViewModel
                 RaisePropertyChanged(FirstNamePropertyName);
                 RaisePropertyChanged(MiddleNamePropertyName);
                 RaisePropertyChanged(PhonePropertyName);
+                RaisePropertyChanged(UsernamePropertyName);
+                RaisePropertyChanged(PasswordPropertyName);
             }
         }
 
