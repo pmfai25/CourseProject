@@ -16,10 +16,18 @@
                 <Label Content="Phone:" />
             </StackPanel>
             <StackPanel>
-                <TextBox Margin="0,4,0,4" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4"
+                         Width="100"
+                         Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4"
+                         Width="100"
+                         Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4"
+                         Width="100"
+                         Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4"
+                         Width="100"
+                         Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </DockPanel>
 

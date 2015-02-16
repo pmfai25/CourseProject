@@ -14,19 +14,33 @@
                 <Label Content="First name:" />
                 <Label Content="Middle name:" />
                 <Label Content="Phone:" />
-                <Label Content="Username:" />
-                <Label Content="Password:" />
+                <!--Label Content="Username:" />
+                <Label Content="Password:" /-->
             </StackPanel>
             <StackPanel>
-                <TextBox Margin="0,4,0,4" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Foreground="AliceBlue" Text="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" 
+                         Width="100"
+                         Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" 
+                         Width="100"
+                         Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" 
+                         Width="100"
+                         Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" 
+                         Width="100"
+                         Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <!--TextBox Margin="0,4,0,4" 
+                         Width="100"
+                         Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4"
+                         Width="100"
+                         Foreground="AliceBlue" Text="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" /-->
             </StackPanel>
         </DockPanel>
-        
-        <Button Content="Save changes" Command="{Binding SaveCommand}" />
+
+        <Button Content="Save changes"
+                Width="100"
+                Command="{Binding SaveCommand}" />
     </StackPanel>
 </UserControl>

@@ -38,7 +38,6 @@ namespace CourseProject.ViewModel
         public InetOrderViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            //_inetOrder = _dataService.All<InetOrder>().First();
             _inetOrder = new InetOrder();
         }
 

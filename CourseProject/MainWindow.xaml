@@ -6,9 +6,9 @@
         xmlns:v="clr-namespace:CourseProject.View"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        Height="300"
-        Width="500"
-        
+        SizeToContent="WidthAndHeight"
+        MinHeight="210"
+        MinWidth="350"
         Title="InetProvider"
         DataContext="{Binding User, Source={StaticResource Locator}}" d:DesignWidth="607.5">
     
@@ -21,6 +21,8 @@
     </Window.Resources>
 
     <StackPanel>
-        <ContentControl Content="{Binding CurrentViewModel}" />
+        <ContentControl
+            Margin="20,20,20,20"
+            Content="{Binding CurrentViewModel}" />
     </StackPanel>
 </Window>

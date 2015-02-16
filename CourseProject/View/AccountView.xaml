@@ -15,7 +15,10 @@
             </StackPanel>
             <StackPanel>
                 <Label Content="{Binding Cash}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding DebtCeiling, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="4,4,0,4"
+                         Width="100"
+                         HorizontalAlignment="Left"
+                         Text="{Binding DebtCeiling, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </DockPanel>
 
