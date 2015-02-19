@@ -119,7 +119,9 @@ namespace CourseProject.ViewModel
                     return;
                 }
                 _inetOrder = value;
-                if (_dataService.All<InetOrder>().Contains(_inetOrder))
+                if (_dataService.All<InetOrder>()
+                    .Where(o => o.InetOrderID == _inetOrder.InetOrderID)
+                    .Count() > 0)
                 {
                     _backUp = Copy(_inetOrder);
                     IsSaved = true;

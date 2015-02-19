@@ -91,7 +91,9 @@ namespace CourseProject.ViewModel
                     return;
                 }
                 _account = value;
-                if (_dataService.All<Account>().Contains(_account))
+                if (_dataService.All<Account>()
+                    .Where(a => a.AccountID == _account.AccountID)
+                    .Count() > 0)
                 {
                     _backUp = Copy(_account);
                     IsSaved = true;
