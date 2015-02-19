@@ -16,6 +16,7 @@ namespace CourseProject.ViewModel
     public class ClientViewModel : ViewModelBase
     {
         private IDataService _dataService;
+        private Client _backUp;
 
         /// <summary>
         /// Initializes a new instance of the ClientViewModel class.
@@ -24,6 +25,50 @@ namespace CourseProject.ViewModel
         {
             _dataService = dataService;
             _client = new Client();
+        }
+
+        private Client Copy(Client client)
+        {
+            Client result = new Client();
+            result.ClientID = client.ClientID;
+            result.FirstName = client.FirstName;
+            result.LastName = client.LastName;
+            result.MiddleName = client.MiddleName;
+            result.Password = client.Password;
+            result.Phone = client.Phone;
+            result.Username = client.Username;
+            result.Accounts = client.Accounts;
+            return result;
+        }
+
+        /// <summary>
+        /// The <see cref="IsSaved" /> property's name.
+        /// </summary>
+        public const string IsSavedPropertyName = "IsSaved";
+
+        private bool _isSaved = true;
+
+        /// <summary>
+        /// Sets and gets the IsSaved property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool IsSaved
+        {
+            get
+            {
+                return _isSaved;
+            }
+
+            protected set
+            {
+                if (_isSaved == value)
+                {
+                    return;
+                }
+
+                _isSaved = value;
+                RaisePropertyChanged(IsSavedPropertyName);
+            }
         }
 
         /// <summary>
@@ -46,12 +91,23 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_client == value)
+                if (_client == value || !IsSaved)
                 {
                     return;
                 }
 
                 _client = value;
+                if (_dataService.All<Client>()
+                    .Where(c => c.ClientID == _client.ClientID)
+                    .Count() > 0)
+                {
+                    _backUp = Copy(_client);
+                    IsSaved = true;
+                }
+                else
+                {
+                    IsSaved = false;
+                }
                 RaisePropertyChanged(ClientPropertyName);
                 RaisePropertyChanged(LastNamePropertyName);
                 RaisePropertyChanged(FirstNamePropertyName);
@@ -95,6 +151,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _client.FirstName = value;
+                IsSaved = false;
                 RaisePropertyChanged(FirstNamePropertyName);
             }
         }
@@ -123,6 +180,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _client.MiddleName = value;
+                IsSaved = false;
                 RaisePropertyChanged(MiddleNamePropertyName);
             }
         }
@@ -151,6 +209,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _client.LastName = value;
+                IsSaved = false;
                 RaisePropertyChanged(LastNamePropertyName);
             }
         }
@@ -179,6 +238,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _client.Phone = value;
+                IsSaved = false;
                 RaisePropertyChanged(PhonePropertyName);
             }
         }
@@ -207,6 +267,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _client.Username = value;
+                IsSaved = false;
                 RaisePropertyChanged(UsernamePropertyName);
             }
         }
@@ -230,6 +291,7 @@ namespace CourseProject.ViewModel
             set
             {
                 _client.Password = PasswordHash.CreateHash(value);
+                IsSaved = false;
                 RaisePropertyChanged(PasswordPropertyName);
             }
         }
@@ -258,6 +320,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _client.Accounts = value;
+                IsSaved = false;
                 RaisePropertyChanged(AccountsPropertyName);
             }
         }

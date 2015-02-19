@@ -19,6 +19,7 @@ namespace CourseProject.ViewModel.TreeView
         private ClientViewModel _clientVM;
         private AccountViewModel _accountVM;
         private InetOrderViewModel _inetOrderVM;
+        private TreeViewItemViewModel _lastSelectedItem;
 
         /// <summary>
         /// Initializes a new instance of the FilteredClientsViewModel class.
@@ -29,6 +30,7 @@ namespace CourseProject.ViewModel.TreeView
             _clientVM = ServiceLocator.Current.GetInstance<ClientViewModel>();
             _accountVM = ServiceLocator.Current.GetInstance<AccountViewModel>();
             _inetOrderVM = ServiceLocator.Current.GetInstance<InetOrderViewModel>();
+            _lastSelectedItem = null;
         }
 
         /// <summary>
@@ -91,8 +93,9 @@ namespace CourseProject.ViewModel.TreeView
                 }
                 if (selected == null || selected.Instance == null)
                     return null;
+                if (_lastSelectedItem == null || IsSaved())
+                    _lastSelectedItem = selected;
                 var instance = selected.Instance;
-                var t = selected.GetType();
                 if (selected.GetType() == typeof(ClientItemViewModel))
                 {
                     _clientVM.Client = (Client)instance;
@@ -112,6 +115,25 @@ namespace CourseProject.ViewModel.TreeView
             }
         }
 
+        private bool IsSaved()
+        {
+            if (_lastSelectedItem == null)
+                return true;
+            if (_lastSelectedItem.GetType() == typeof(ClientItemViewModel))
+            {
+                return _clientVM.IsSaved;
+            }
+            if (_lastSelectedItem.GetType() == typeof(AccountItemViewModel))
+            {
+                return _accountVM.IsSaved;
+            }
+            if (_lastSelectedItem.GetType() == typeof(InetOrderItemViewModel))
+            {
+                return _inetOrderVM.IsSaved;
+            }
+            return true;
+        }
+
         private RelayCommand _selectItemCommand;
 
         /// <summary>
@@ -125,7 +147,8 @@ namespace CourseProject.ViewModel.TreeView
                     ?? (_selectItemCommand = new RelayCommand(
                     () =>
                     {
-                        RaisePropertyChanged(SelectedItemPropertyName);
+                        if (IsSaved())
+                            RaisePropertyChanged(SelectedItemPropertyName);
                     }));
             }
         }

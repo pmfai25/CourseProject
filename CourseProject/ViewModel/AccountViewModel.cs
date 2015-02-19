@@ -15,12 +15,55 @@ namespace CourseProject.ViewModel
     public class AccountViewModel : ViewModelBase
     {
         private IDataService _dataService;
+        private Account _backUp;
 
         public AccountViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            //_account = _dataService.All<Account>().First();
             _account = new Account();
+        }
+
+        private Account Copy(Account account)
+        {
+            Account result = new Account();
+            result.AccountID = account.AccountID;
+            result.Cash = account.Cash;
+            result.Client = account.Client;
+            result.ClientID = account.ClientID;
+            result.DebtCeiling = account.DebtCeiling;
+            result.InetOrders = account.InetOrders;
+            result.Refills = account.Refills;
+            return result;
+        }
+
+        /// <summary>
+        /// The <see cref="IsSaved" /> property's name.
+        /// </summary>
+        public const string IsSavedPropertyName = "IsSaved";
+
+        private bool _isSaved = true;
+
+        /// <summary>
+        /// Sets and gets the IsSaved property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool IsSaved
+        {
+            get
+            {
+                return _isSaved;
+            }
+
+            protected set
+            {
+                if (_isSaved == value)
+                {
+                    return;
+                }
+
+                _isSaved = value;
+                RaisePropertyChanged(IsSavedPropertyName);
+            }
         }
 
         /// <summary>
@@ -43,12 +86,20 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_account == value)
+                if (_account == value || !IsSaved)
                 {
                     return;
                 }
-
                 _account = value;
+                if (_dataService.All<Account>().Contains(_account))
+                {
+                    _backUp = Copy(_account);
+                    IsSaved = true;
+                }
+                else
+                {
+                    IsSaved = false;
+                }
                 RaisePropertyChanged(AccountPropertyName);
                 RaisePropertyChanged(CashPropertyName);
                 RaisePropertyChanged(DebtCeilingPropertyName);
@@ -126,6 +177,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _account.Cash = value;
+                IsSaved = false;
                 RaisePropertyChanged(CashPropertyName);
             }
         }
@@ -150,12 +202,17 @@ namespace CourseProject.ViewModel
             {
                 if (value > _account.Cash)
                     value = _account.Cash;
-                if (_account.DebtCeiling == value ||
-                    value > 0)
+                if (value > 0)
+                {
+                    RaisePropertyChanged(DebtCeilingPropertyName);
+                    return;
+                }
+                if (_account.DebtCeiling == value)
                 {
                     return;
                 }
                 _account.DebtCeiling = value;
+                IsSaved = false;
                 RaisePropertyChanged(DebtCeilingPropertyName);
             }
         }
@@ -184,6 +241,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _account.Client = value;
+                IsSaved = false;
                 RaisePropertyChanged(ClientPropertyName);
             }
         }
@@ -212,6 +270,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _account.InetOrders = value;
+                IsSaved = false;
                 RaisePropertyChanged(InetOrdersPropertyName);
             }
         }
@@ -240,6 +299,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _account.Refills = value;
+                IsSaved = false;
                 RaisePropertyChanged(RefillsPropertyName);
             }
         }

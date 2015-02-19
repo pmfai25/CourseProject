@@ -16,6 +16,7 @@ namespace CourseProject.ViewModel
     {
         private InetOrder _inetOrder;
         private IDataService _dataService;
+        private InetOrder _backUp;
 
         /// <summary>
         /// Initializes a new instance of the InetOrderViewModel class.
@@ -41,6 +42,60 @@ namespace CourseProject.ViewModel
             _inetOrder = new InetOrder();
         }
 
+        private InetOrder Copy(InetOrder inetOrder)
+        {
+            InetOrder result = new InetOrder();
+            result.Account = inetOrder.Account;
+            result.AccountID = inetOrder.AccountID;
+            result.Address = inetOrder.Address;
+            result.AddressID = inetOrder.AddressID;
+            result.AutomaticPayment = inetOrder.AutomaticPayment;
+            result.CreatedAt = inetOrder.CreatedAt;
+            result.CreatedBy = inetOrder.CreatedBy;
+            result.Employee = inetOrder.Employee;
+            result.Employee1 = inetOrder.Employee1;
+            result.FinishDate = inetOrder.FinishDate;
+            result.InetOrderID = inetOrder.InetOrderID;
+            result.IsActual = inetOrder.IsActual;
+            result.Payments = inetOrder.Payments;
+            result.StartDate = inetOrder.StartDate;
+            result.Tariff = inetOrder.Tariff;
+            result.TariffID = inetOrder.TariffID;
+            result.UpdatedAt = inetOrder.UpdatedAt;
+            result.UpdatedBy = inetOrder.UpdatedBy;
+            return result;
+        }
+        
+        /// <summary>
+        /// The <see cref="IsSaved" /> property's name.
+        /// </summary>
+        public const string IsSavedPropertyName = "IsSaved";
+
+        private bool _isSaved = true;
+
+        /// <summary>
+        /// Sets and gets the IsSaved property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool IsSaved
+        {
+            get
+            {
+                return _isSaved;
+            }
+
+            protected set
+            {
+                if (_isSaved == value)
+                {
+                    return;
+                }
+
+                _isSaved = value;
+                RaisePropertyChanged(IsSavedPropertyName);
+            }
+        }
+
         /// <summary>
         /// The <see cref="InetOrder" /> property's name.
         /// </summary>
@@ -59,12 +114,20 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_inetOrder == value)
+                if (_inetOrder == value || !IsSaved)
                 {
                     return;
                 }
-
                 _inetOrder = value;
+                if (_dataService.All<InetOrder>().Contains(_inetOrder))
+                {
+                    _backUp = Copy(_inetOrder);
+                    IsSaved = true;
+                }
+                else
+                {
+                    IsSaved = false;
+                }
                 RaisePropertyChanged(InetOrderPropertyName);
                 RaisePropertyChanged(StartDatePropertyName);
                 RaisePropertyChanged(FinishDatePropertyName);
@@ -184,6 +247,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.StartDate = value;
+                IsSaved = false;
                 RaisePropertyChanged(StartDatePropertyName);
             }
         }
@@ -212,6 +276,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.FinishDate = value;
+                IsSaved = false;
                 RaisePropertyChanged(FinishDatePropertyName);
             }
         }
@@ -240,6 +305,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.IsActual = value;
+                IsSaved = false;
                 RaisePropertyChanged(IsActualPropertyName);
             }
         }
@@ -268,6 +334,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.AutomaticPayment = value;
+                IsSaved = false;
                 RaisePropertyChanged(AutomaticPaymentPropertyName);
             }
         }
@@ -346,6 +413,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.UpdatedAt = value;
+                IsSaved = false;
                 RaisePropertyChanged(UpdatedAtPropertyName);
             }
         }
@@ -409,6 +477,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.Account = value;
+                IsSaved = false;
                 RaisePropertyChanged(AccountPropertyName);
             }
         }
@@ -437,6 +506,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.Address = value;
+                IsSaved = false;
                 RaisePropertyChanged(AddressPropertyName);
             }
         }
@@ -465,6 +535,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.Employee = value;
+                IsSaved = false;
                 RaisePropertyChanged(EmployeeCreatedPropertyName);
             }
         }
@@ -493,6 +564,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.Employee1 = value;
+                IsSaved = false;
                 RaisePropertyChanged(EmployeeUpdatedPropertyName);
             }
         }
@@ -521,6 +593,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.Tariff = value;
+                IsSaved = false;
                 RaisePropertyChanged(TariffPropertyName);
             }
         }
@@ -549,6 +622,7 @@ namespace CourseProject.ViewModel
                 }
 
                 _inetOrder.Payments = value;
+                IsSaved = false;
                 RaisePropertyChanged(PaymentsPropertyName);
             }
         }
