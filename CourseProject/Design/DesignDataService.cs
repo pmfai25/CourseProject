@@ -66,6 +66,8 @@ namespace CourseProject.Design
             return null;
         }
 
+        public void Add<T>(T item) where T : class { }
+
         public void SaveChanges() { }
 
         public void Dispose() {}

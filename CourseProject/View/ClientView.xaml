@@ -14,6 +14,9 @@
                 <Label Content="First name:" />
                 <Label Content="Middle name:" />
                 <Label Content="Phone:" />
+                <Label Content="Username:" Visibility="{Binding Visibility}"/>
+                <Label Content="Password:" Visibility="{Binding Visibility}"/>
+                <Label Content="Confirm Password:" Visibility="{Binding Visibility}"/>
             </StackPanel>
             <StackPanel>
                 <TextBox Margin="0,4,0,4"
@@ -28,9 +31,34 @@
                 <TextBox Margin="0,4,0,4"
                          Width="100"
                          Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4"
+                         Width="100"
+                         Visibility="{Binding Visibility}"
+                         Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4"
+                         Width="100"
+                         Visibility="{Binding Visibility}"
+                         Text="{Binding Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4"
+                         Width="100"
+                         Visibility="{Binding Visibility}"
+                         Text="{Binding PasswordConfirmation, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </DockPanel>
-
+        <DockPanel>
+            <Button Content="Cancel Changes" 
+                    Command="{Binding CancelChangesCommand}"
+                    Width="100"
+                    Margin="4,4,4,4"/>
+            <Button Content="Save Changes" 
+                    Command="{Binding SaveChangesCommand}" 
+                    Width="100"
+                    Margin="4,4,4,4"/>
+        </DockPanel>
+        <Button Content="Create New Client"
+                Command="{Binding CreateCommand}"
+                Margin="4,4,4,4"
+                Width="150"/>
     </StackPanel>
     
 </UserControl>

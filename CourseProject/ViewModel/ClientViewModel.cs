@@ -27,7 +27,7 @@ namespace CourseProject.ViewModel
             _client = new Client();
         }
 
-        private Client Copy(Client client)
+        private Client BackUp(Client client)
         {
             Client result = new Client();
             result.ClientID = client.ClientID;
@@ -39,6 +39,19 @@ namespace CourseProject.ViewModel
             result.Username = client.Username;
             result.Accounts = client.Accounts;
             return result;
+        }
+
+        private Client Fill(ref Client client, Client filler)
+        {
+            client.ClientID = filler.ClientID;
+            client.FirstName = filler.FirstName;
+            client.LastName = filler.LastName;
+            client.MiddleName = filler.MiddleName;
+            client.Password = filler.Password;
+            client.Phone = filler.Phone;
+            client.Username = filler.Username;
+            client.Accounts = filler.Accounts;
+            return client;
         }
 
         /// <summary>
@@ -72,6 +85,70 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
+        /// The <see cref="Visibility" /> property's name.
+        /// </summary>
+        public const string VisibilityPropertyName = "Visibility";
+
+        private string _visibility = "Collapsed";
+
+        /// <summary>
+        /// Sets and gets the Visibility property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string Visibility
+        {
+            get
+            {
+                return _visibility;
+            }
+
+            set
+            {
+                if (_visibility == value)
+                {
+                    return;
+                }
+
+                _visibility = value;
+                RaisePropertyChanged(VisibilityPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IsNew" /> property's name.
+        /// </summary>
+        public const string IsNewPropertyName = "IsNew";
+
+        private bool _isNew = true;
+
+        /// <summary>
+        /// Sets and gets the IsNew property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool IsNew
+        {
+            get
+            {
+                return _isNew;
+            }
+
+            set
+            {
+                if (_isNew == value)
+                {
+                    return;
+                }
+
+                _isNew = value;
+                if (_isNew == true)
+                    Visibility = "Visible";
+                else
+                    Visibility = "Collapsed";
+                RaisePropertyChanged(IsNewPropertyName);
+            }
+        }
+
+        /// <summary>
         /// The <see cref="Client" /> property's name.
         /// </summary>
         public const string ClientPropertyName = "Client";
@@ -91,7 +168,7 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_client == value || !IsSaved)
+                if (!IsSaved)
                 {
                     return;
                 }
@@ -101,11 +178,13 @@ namespace CourseProject.ViewModel
                     .Where(c => c.ClientID == _client.ClientID)
                     .Count() > 0)
                 {
-                    _backUp = Copy(_client);
+                    _backUp = BackUp(_client);
                     IsSaved = true;
+                    IsNew = false;
                 }
                 else
                 {
+                    IsNew = true;
                     IsSaved = false;
                 }
                 RaisePropertyChanged(ClientPropertyName);
@@ -113,6 +192,7 @@ namespace CourseProject.ViewModel
                 RaisePropertyChanged(FirstNamePropertyName);
                 RaisePropertyChanged(MiddleNamePropertyName);
                 RaisePropertyChanged(PhonePropertyName);
+                RaisePropertyChanged(UsernamePropertyName);
             }
         }
 
@@ -290,6 +370,8 @@ namespace CourseProject.ViewModel
 
             set
             {
+                if (string.IsNullOrEmpty(value))
+                    return;
                 _client.Password = PasswordHash.CreateHash(value);
                 IsSaved = false;
                 RaisePropertyChanged(PasswordPropertyName);
@@ -325,5 +407,83 @@ namespace CourseProject.ViewModel
             }
         }
 
+        private RelayCommand _saveChangesCommand;
+
+        /// <summary>
+        /// Gets the SaveChangesCommand.
+        /// </summary>
+        public RelayCommand SaveChangesCommand
+        {
+            get
+            {
+                return _saveChangesCommand
+                    ?? (_saveChangesCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!SaveChangesCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+                        if (_dataService.All<Client>()
+                            .Where(c => c.ClientID == _client.ClientID)
+                            .Count() < 1)
+                        {
+                            _dataService.Add<Client>(_client);
+                        }
+                        _dataService.SaveChanges();
+                        IsSaved = true;
+                    },
+                    () => !IsSaved));
+            }
+        }
+
+        private RelayCommand _cancelChangesCommand;
+
+        /// <summary>
+        /// Gets the CancelChangesCommand.
+        /// </summary>
+        public RelayCommand CancelChangesCommand
+        {
+            get
+            {
+                return _cancelChangesCommand
+                    ?? (_cancelChangesCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!CancelChangesCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+                        IsSaved = true;
+                        Client = Fill(ref _client, _backUp);
+                    },
+                    () => !IsSaved));
+            }
+        }
+
+        private RelayCommand _createCommand;
+
+        /// <summary>
+        /// Gets the CreateCommand.
+        /// </summary>
+        public RelayCommand CreateCommand
+        {
+            get
+            {
+                return _createCommand
+                    ?? (_createCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!CreateCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+
+                        Client = new Client()
+                        { ClientID = _dataService.All<Client>().Max(c => c.ClientID) + 1 };
+                    },
+                    () => IsSaved));
+            }
+        }
     }
 }

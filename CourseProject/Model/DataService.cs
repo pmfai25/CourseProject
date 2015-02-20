@@ -29,6 +29,12 @@ namespace CourseProject.Model
             return result;
         }
 
+        public void Add<T>(T item) where T : class 
+        {
+
+            _entities.Set<T>().Add(item);
+        }
+
         public void SaveChanges()
         {
             _entities.SaveChanges();

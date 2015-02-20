@@ -11,6 +11,7 @@ namespace CourseProject.Model
         //void GetData(Action<DataItem, Exception> callback);
         IQueryable<T> All<T>() where T : class;
         IQueryable<T> AllIncluding<T>(params Expression<Func<T, object>>[] include) where T : class;
+        void Add<T>(T item) where T : class;
         void SaveChanges();
     }
 }
