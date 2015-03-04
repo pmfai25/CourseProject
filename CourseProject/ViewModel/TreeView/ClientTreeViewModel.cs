@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Practices.ServiceLocation;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseProject.ViewModel.TreeView
 {
@@ -50,7 +51,7 @@ namespace CourseProject.ViewModel.TreeView
             get
             {
                 _clients.Clear();
-                foreach (var c in _dataService.All<Client>())
+                foreach (var c in _dataService.All<Client>().OrderBy(c => c.LastName))
                 {
                     _clients.Add(new ClientItemViewModel(c));
                 }
