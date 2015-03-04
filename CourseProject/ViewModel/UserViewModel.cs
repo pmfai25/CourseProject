@@ -27,6 +27,36 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
+        /// The <see cref="EmployeeID" /> property's name.
+        /// </summary>
+        public const string EmployeeIDPropertyName = "EmployeeID";
+
+        private int _employeeID;
+
+        /// <summary>
+        /// Sets and gets the EmployeeID property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public int EmployeeID
+        {
+            get
+            {
+                return _employeeID;
+            }
+
+            set
+            {
+                if (_employeeID == value)
+                {
+                    return;
+                }
+
+                _employeeID = value;
+                RaisePropertyChanged(EmployeeIDPropertyName);
+            }
+        }
+
+        /// <summary>
         /// The <see cref="Username" /> property's name.
         /// </summary>
         public const string UsernamePropertyName = "Username";
