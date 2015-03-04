@@ -21,6 +21,19 @@
                          Text="{Binding DebtCeiling, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </DockPanel>
-
+        <DockPanel>
+            <Button Content="Cancel Changes" 
+                    Command="{Binding CancelChangesCommand}"
+                    Width="100"
+                    Margin="4,4,4,4"/>
+            <Button Content="Save Changes" 
+                    Command="{Binding SaveChangesCommand}" 
+                    Width="100"
+                    Margin="4,4,4,4"/>
+        </DockPanel>
+        <Button Content="Add Order"
+                Command="{Binding AddOrderCommand}"
+                Width="100"
+                Margin="4,4,4,4"/>
     </StackPanel>
 </UserControl>

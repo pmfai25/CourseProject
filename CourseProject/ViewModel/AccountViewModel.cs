@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace CourseProject.ViewModel
 {
@@ -23,7 +24,7 @@ namespace CourseProject.ViewModel
             _account = new Account();
         }
 
-        private Account Copy(Account account)
+        private Account BackUp(Account account)
         {
             Account result = new Account();
             result.AccountID = account.AccountID;
@@ -34,6 +35,18 @@ namespace CourseProject.ViewModel
             result.InetOrders = account.InetOrders;
             result.Refills = account.Refills;
             return result;
+        }
+
+        private Account Fill(ref Account account, Account filler)
+        {
+            account.AccountID = filler.AccountID;
+            account.Cash = filler.Cash;
+            account.Client = filler.Client;
+            account.ClientID = filler.ClientID;
+            account.DebtCeiling = filler.DebtCeiling;
+            account.InetOrders = filler.InetOrders;
+            account.Refills = filler.Refills;
+            return account;
         }
 
         /// <summary>
@@ -86,7 +99,7 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_account == value || !IsSaved)
+                if (!IsSaved)
                 {
                     return;
                 }
@@ -95,7 +108,7 @@ namespace CourseProject.ViewModel
                     .Where(a => a.AccountID == _account.AccountID)
                     .Count() > 0)
                 {
-                    _backUp = Copy(_account);
+                    _backUp = BackUp(_account);
                     IsSaved = true;
                 }
                 else
@@ -303,6 +316,89 @@ namespace CourseProject.ViewModel
                 _account.Refills = value;
                 IsSaved = false;
                 RaisePropertyChanged(RefillsPropertyName);
+            }
+        }
+
+        private RelayCommand _saveChangesCommand;
+
+        /// <summary>
+        /// Gets the SaveChangesCommand.
+        /// </summary>
+        public RelayCommand SaveChangesCommand
+        {
+            get
+            {
+                return _saveChangesCommand
+                    ?? (_saveChangesCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!SaveChangesCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+                        if (_dataService.All<Account>()
+                            .Where(a => a.ClientID == _account.AccountID)
+                            .Count() < 1)
+                        {
+                            _dataService.Add<Account>(_account);
+                        }
+                        _dataService.SaveChanges();
+                        IsSaved = true;
+                    },
+                    () => !IsSaved));
+            }
+        }
+
+        private RelayCommand _cancelChangesCommand;
+
+        /// <summary>
+        /// Gets the CancelChangesCommand.
+        /// </summary>
+        public RelayCommand CancelChangesCommand
+        {
+            get
+            {
+                return _cancelChangesCommand
+                    ?? (_cancelChangesCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!CancelChangesCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+                        IsSaved = true;
+                        Account = Fill(ref _account, _backUp);
+                    },
+                    () => !IsSaved));
+            }
+        }
+
+        private RelayCommand _addOrderCommand;
+
+        /// <summary>
+        /// Gets the AddOrderCommand.
+        /// </summary>
+        public RelayCommand AddOrderCommand
+        {
+            get
+            {
+                return _addOrderCommand
+                    ?? (_addOrderCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!AddOrderCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+
+                        //InetOrders.Add(new InetOrder()
+                        //    {
+                        //        InetOrderID = _dataService.All<InetOrder>().Max(a => a.AccountID) +1,
+                        //        CreatedAt = DateTime.Now,
+                                
+                        //    });
+                    },
+                    () => true));
             }
         }
 

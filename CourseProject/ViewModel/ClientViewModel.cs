@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 using PasswordSecurity;
 using System.Linq;
+using System.Diagnostics;
 using GalaSoft.MvvmLight.CommandWpf;
 
 namespace CourseProject.ViewModel
@@ -481,6 +482,65 @@ namespace CourseProject.ViewModel
 
                         Client = new Client()
                         { ClientID = _dataService.All<Client>().Max(c => c.ClientID) + 1 };
+                    },
+                    () => IsSaved));
+            }
+        }
+
+        private RelayCommand _addAccountCommand;
+
+        /// <summary>
+        /// Gets the AddAccountCommand.
+        /// </summary>
+        public RelayCommand AddAccountCommand
+        {
+            get
+            {
+                return _addAccountCommand
+                    ?? (_addAccountCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!AddAccountCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+
+                        Client.Accounts.Add(new Account()
+                            {
+                                ClientID = _client.ClientID,
+                                AccountID = _dataService.All<Account>().Max(a => a.AccountID) + 1,
+                                Cash = 0,
+                                DebtCeiling = 0,
+                                Client = _client
+                            });
+                        IsSaved = false;
+                    },
+                    () => IsSaved));
+            }
+        }
+
+        private RelayCommand _watchReportCommand;
+
+        /// <summary>
+        /// Gets the WatchReportCommand.
+        /// </summary>
+        public RelayCommand WatchReportCommand
+        {
+            get
+            {
+                return _watchReportCommand
+                    ?? (_watchReportCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!WatchReportCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+
+                        var prInfo = new ProcessStartInfo("IExplore.exe", "http://localhost/ReportServer/SQLServerReport");
+                        prInfo.Verb = "runas";
+
+                        Process.Start(prInfo);
                     },
                     () => IsSaved));
             }
