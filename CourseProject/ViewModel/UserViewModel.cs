@@ -27,32 +27,32 @@ namespace CourseProject.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="EmployeeID" /> property's name.
+        /// The <see cref="Employee" /> property's name.
         /// </summary>
-        public const string EmployeeIDPropertyName = "EmployeeID";
+        public const string EmployeePropertyName = "Employee";
 
-        private int _employeeID;
+        private Employee _employee;
 
         /// <summary>
-        /// Sets and gets the EmployeeID property.
+        /// Sets and gets the Employee property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public int EmployeeID
+        public Employee Employee
         {
             get
             {
-                return _employeeID;
+                return _employee;
             }
 
             set
             {
-                if (_employeeID == value)
+                if (_employee == value)
                 {
                     return;
                 }
 
-                _employeeID = value;
-                RaisePropertyChanged(EmployeeIDPropertyName);
+                _employee = value;
+                RaisePropertyChanged(EmployeePropertyName);
             }
         }
 
@@ -190,6 +190,7 @@ namespace CourseProject.ViewModel
                             PasswordHash.ValidatePassword(_password, employee.Password))
                         {
                             IsLoggedIn = true;
+                            _employee = employee;
                             CurrentViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
                         }
                     },
