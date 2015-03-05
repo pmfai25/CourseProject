@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.Practices.ServiceLocation;
 
 namespace CourseProject.ViewModel
 {
@@ -337,7 +338,7 @@ namespace CourseProject.ViewModel
                             return;
                         }
                         if (_dataService.All<Account>()
-                            .Where(a => a.ClientID == _account.AccountID)
+                            .Where(a => a.AccountID == _account.AccountID)
                             .Count() < 1)
                         {
                             _dataService.Add<Account>(_account);
@@ -391,12 +392,16 @@ namespace CourseProject.ViewModel
                             return;
                         }
 
-                        //InetOrders.Add(new InetOrder()
-                        //    {
-                        //        InetOrderID = _dataService.All<InetOrder>().Max(a => a.AccountID) +1,
-                        //        CreatedAt = DateTime.Now,
-                                
-                        //    });
+                        InetOrders.Add(new InetOrder()
+                            {
+                                InetOrderID = _dataService.All<InetOrder>().Max(a => a.AccountID) + 1,
+                                CreatedAt = DateTime.Now,
+                                CreatedBy = ServiceLocator.Current.GetInstance<UserViewModel>().Employee.EmployeeID,
+                                Employee = ServiceLocator.Current.GetInstance<UserViewModel>().Employee,
+                                AccountID = AccountID,
+                                Account = Account
+                            });
+                        IsSaved = false;
                     },
                     () => true));
             }
