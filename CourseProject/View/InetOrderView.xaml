@@ -20,21 +20,23 @@
                 <Label Content="Updated at:" />
             </StackPanel>
             <StackPanel>
-                <TextBox Margin="0,4,0,4" Text="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding FinishDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DatePicker Margin="0,0,0,4"
+                            SelectedDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DatePicker Margin="0,0,0,6" 
+                            SelectedDate="{Binding FinishDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox Margin="0,4,0,4" 
+                         IsChecked="{Binding IsActual, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         IsEnabled="False"/>
+                <CheckBox Margin="0,4,0,4" 
+                         IsChecked="{Binding AutomaticPayment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Margin="0,4,0,4" 
-                         Text="{Binding IsActual, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                         IsReadOnly="True"/>
-                <TextBox Margin="0,4,0,4" 
-                         Text="{Binding AutomaticPayment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" 
-                         Text="{Binding CreatedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Text="{Binding CreatedByString, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                          IsReadOnly="True"/>
                 <TextBox Margin="0,4,0,4" 
                          Text="{Binding CreatedAt, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                          IsReadOnly="True"/>
                 <TextBox Margin="0,4,0,4" 
-                         Text="{Binding UpdatedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Text="{Binding UpdatedByString, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                          IsReadOnly="True"/>
                 <TextBox Margin="0,4,0,4"
                          Text="{Binding UpdatedAt, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"

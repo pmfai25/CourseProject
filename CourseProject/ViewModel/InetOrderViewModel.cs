@@ -382,6 +382,19 @@ namespace CourseProject.ViewModel
             }
         }
 
+        public string CreatedByString
+        {
+            get
+            {
+                var employee = _dataService.All<Employee>()
+                    .Where(e => e.EmployeeID == CreatedBy).SingleOrDefault();
+                if (employee != null)
+                    return String.Format("{0} {1} {2}",
+                        employee.LastName, employee.FirstName, employee.MiddleName);
+                return "System Administrator";
+            }
+        }
+
         /// <summary>
         /// The <see cref="CreatedAt" /> property's name.
         /// </summary>
@@ -425,6 +438,29 @@ namespace CourseProject.ViewModel
                 _inetOrder.UpdatedBy = value;
                 IsSaved = false;
                 RaisePropertyChanged(UpdatedByPropertyName);
+                RaisePropertyChanged(UpdatedByStringPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="UpdatedByString" /> property's name.
+        /// </summary>
+        public const string UpdatedByStringPropertyName = "UpdatedByString";
+
+        /// <summary>
+        /// Sets and gets the UpdatedByString property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string UpdatedByString
+        {
+            get
+            {
+                var employee = _dataService.All<Employee>()
+                    .Where(e => e.EmployeeID == UpdatedBy).SingleOrDefault();
+                if (employee != null)
+                    return String.Format("{0} {1} {2}",
+                        employee.LastName, employee.FirstName, employee.MiddleName);
+                return "System/Administrator";
             }
         }
 
