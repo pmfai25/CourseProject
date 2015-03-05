@@ -10,6 +10,7 @@
     <StackPanel>
         <DockPanel>
             <StackPanel>
+                <Label Content="Tariff:"/>
                 <Label Content="Start date:" />
                 <Label Content="Finish date:" />
                 <Label Content="Is actual:" />
@@ -20,6 +21,9 @@
                 <Label Content="Updated at:" />
             </StackPanel>
             <StackPanel>
+                <ComboBox ItemsSource="{Binding AllTariffNames}" 
+                          SelectedItem="{Binding SelectedTariffName}"
+                          Margin="0,1,0,2"/>
                 <DatePicker Margin="0,0,0,4"
                             SelectedDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DatePicker Margin="0,0,0,6" 

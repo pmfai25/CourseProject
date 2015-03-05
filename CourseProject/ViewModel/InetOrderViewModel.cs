@@ -231,6 +231,14 @@ namespace CourseProject.ViewModel
                 return _inetOrder.TariffID;
             }
 
+            protected set
+            {
+                if (_inetOrder.TariffID == value)
+                    return;
+                _inetOrder.TariffID = value;
+                IsSaved = false;
+            }
+
             //set
             //{
             //    if (_inetOrder.TariffID == value ||
@@ -670,6 +678,56 @@ namespace CourseProject.ViewModel
                 _inetOrder.Tariff = value;
                 IsSaved = false;
                 RaisePropertyChanged(TariffPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SelectedTariffName" /> property's name.
+        /// </summary>
+        public const string SelectedTariffNamePropertyName = "SelectedTariffName";
+
+        private string _selectedTariffName = "";
+
+        /// <summary>
+        /// Sets and gets the SelectedTariff property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string SelectedTariffName
+        {
+            get
+            {
+                var tariff = _dataService.All<Tariff>()
+                    .Where(t => t.TariffID == TariffID)
+                    .SingleOrDefault();
+                if (tariff == null)
+                    return _selectedTariffName = "";
+                return _selectedTariffName = tariff.TariffName;
+            }
+
+            set
+            {
+                if (_selectedTariffName == value)
+                {
+                    return;
+                }
+
+                _selectedTariffName = value;
+                RaisePropertyChanged(SelectedTariffNamePropertyName);
+
+                var tariff = _dataService.All<Tariff>()
+                    .Where(t => t.TariffName == value).SingleOrDefault();
+                if (tariff == null)
+                    return;
+                TariffID = tariff.TariffID;
+                Tariff = tariff;
+            }
+        }
+
+        public List<string> AllTariffNames
+        {
+            get
+            {
+                return _dataService.All<Tariff>().Select(t => t.TariffName).ToList();
             }
         }
 
