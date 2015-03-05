@@ -22,14 +22,34 @@
             <StackPanel>
                 <TextBox Margin="0,4,0,4" Text="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Margin="0,4,0,4" Text="{Binding FinishDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding IsActual, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding AutomaticPayment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding CreatedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding CreatedAt, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding UpdatedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,4,0,4" Text="{Binding UpdatedAt, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" 
+                         Text="{Binding IsActual, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         IsReadOnly="True"/>
+                <TextBox Margin="0,4,0,4" 
+                         Text="{Binding AutomaticPayment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Margin="0,4,0,4" 
+                         Text="{Binding CreatedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         IsReadOnly="True"/>
+                <TextBox Margin="0,4,0,4" 
+                         Text="{Binding CreatedAt, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         IsReadOnly="True"/>
+                <TextBox Margin="0,4,0,4" 
+                         Text="{Binding UpdatedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         IsReadOnly="True"/>
+                <TextBox Margin="0,4,0,4"
+                         Text="{Binding UpdatedAt, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsReadOnly="True"/>
             </StackPanel>
         </DockPanel>
-
+        <DockPanel>
+            <Button Content="Cancel Changes" 
+                    Command="{Binding CancelChangesCommand}"
+                    Width="100"
+                    Margin="4,4,4,4"/>
+            <Button Content="Save Changes" 
+                    Command="{Binding SaveChangesCommand}" 
+                    Width="100"
+                    Margin="4,4,4,4"/>
+        </DockPanel>
     </StackPanel>
 </UserControl>

@@ -1,5 +1,7 @@
 ﻿using CourseProject.Model;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,11 +44,11 @@ namespace CourseProject.ViewModel
             _inetOrder = new InetOrder();
         }
 
-        private InetOrder Copy(InetOrder inetOrder)
+        private InetOrder BackUp(InetOrder inetOrder)
         {
             InetOrder result = new InetOrder();
-            result.Account = inetOrder.Account;
             result.AccountID = inetOrder.AccountID;
+            result.Account = inetOrder.Account;
             result.Address = inetOrder.Address;
             result.AddressID = inetOrder.AddressID;
             result.AutomaticPayment = inetOrder.AutomaticPayment;
@@ -57,13 +59,36 @@ namespace CourseProject.ViewModel
             result.FinishDate = inetOrder.FinishDate;
             result.InetOrderID = inetOrder.InetOrderID;
             result.IsActual = inetOrder.IsActual;
-            result.Payments = inetOrder.Payments;
+            result.Payments = InetOrder.Payments;
             result.StartDate = inetOrder.StartDate;
             result.Tariff = inetOrder.Tariff;
             result.TariffID = inetOrder.TariffID;
             result.UpdatedAt = inetOrder.UpdatedAt;
             result.UpdatedBy = inetOrder.UpdatedBy;
             return result;
+        }
+
+        private InetOrder Fill(ref InetOrder inetOrder, InetOrder filler)
+        {
+            inetOrder.AccountID = filler.AccountID;
+            inetOrder.Account = filler.Account;
+            inetOrder.Address = filler.Address;
+            inetOrder.AddressID = filler.AddressID;
+            inetOrder.AutomaticPayment = filler.AutomaticPayment;
+            inetOrder.CreatedAt = filler.CreatedAt;
+            inetOrder.CreatedBy = filler.CreatedBy;
+            inetOrder.Employee = filler.Employee;
+            inetOrder.Employee1 = filler.Employee1;
+            inetOrder.FinishDate = filler.FinishDate;
+            inetOrder.InetOrderID = filler.InetOrderID;
+            inetOrder.IsActual = filler.IsActual;
+            inetOrder.Payments = filler.Payments;
+            inetOrder.StartDate = filler.StartDate;
+            inetOrder.Tariff = filler.Tariff;
+            inetOrder.TariffID = filler.TariffID;
+            inetOrder.UpdatedAt = filler.UpdatedAt;
+            inetOrder.UpdatedBy = filler.UpdatedBy;
+            return inetOrder;
         }
         
         /// <summary>
@@ -114,7 +139,7 @@ namespace CourseProject.ViewModel
 
             set
             {
-                if (_inetOrder == value || !IsSaved)
+                if (!IsSaved)
                 {
                     return;
                 }
@@ -123,7 +148,7 @@ namespace CourseProject.ViewModel
                     .Where(o => o.InetOrderID == _inetOrder.InetOrderID)
                     .Count() > 0)
                 {
-                    _backUp = Copy(_inetOrder);
+                    _backUp = BackUp(_inetOrder);
                     IsSaved = true;
                 }
                 else
@@ -389,6 +414,18 @@ namespace CourseProject.ViewModel
             {
                 return _inetOrder.UpdatedBy;
             }
+
+            protected set
+            {
+                if (_inetOrder.UpdatedBy == value)
+                {
+                    return;
+                }
+
+                _inetOrder.UpdatedBy = value;
+                IsSaved = false;
+                RaisePropertyChanged(UpdatedByPropertyName);
+            }
         }
 
         /// <summary>
@@ -626,6 +663,64 @@ namespace CourseProject.ViewModel
                 _inetOrder.Payments = value;
                 IsSaved = false;
                 RaisePropertyChanged(PaymentsPropertyName);
+            }
+        }
+
+        private RelayCommand _saveChangesCommand;
+
+        /// <summary>
+        /// Gets the SaveChangesCommand.
+        /// </summary>
+        public RelayCommand SaveChangesCommand
+        {
+            get
+            {
+                return _saveChangesCommand
+                    ?? (_saveChangesCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!SaveChangesCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+
+                        if (_dataService.All<InetOrder>()
+                            .Where(o => o.InetOrderID == _inetOrder.InetOrderID)
+                            .Count() < 1)
+                        {
+                            _dataService.Add<InetOrder>(_inetOrder);
+                        }
+                        UpdatedAt = DateTime.Now;
+                        UpdatedBy = ServiceLocator.Current.GetInstance<UserViewModel>().Employee.EmployeeID;
+                        EmployeeUpdated = ServiceLocator.Current.GetInstance<UserViewModel>().Employee;
+                        _dataService.SaveChanges();
+                        IsSaved = true;
+                    },
+                    () => !IsSaved));
+            }
+        }
+
+        private RelayCommand _cancelChangesCommand;
+
+        /// <summary>
+        /// Gets the CancelChangesCommand.
+        /// </summary>
+        public RelayCommand CancelChangesCommand
+        {
+            get
+            {
+                return _cancelChangesCommand
+                    ?? (_cancelChangesCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!CancelChangesCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+                        IsSaved = true;
+                        InetOrder = Fill(ref _inetOrder, _backUp);
+                    },
+                    () => !IsSaved));
             }
         }
     }
