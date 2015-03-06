@@ -31,9 +31,34 @@
                     Width="100"
                     Margin="4,4,4,4"/>
         </DockPanel>
-        <Button Content="Add Order"
+        <DockPanel>
+            <Button Content="Add Order"
                 Command="{Binding AddOrderCommand}"
                 Width="100"
                 Margin="4,4,4,4"/>
+        </DockPanel>
+        <Label Content="Refills" />
+        <DataGrid HorizontalAlignment="Left"
+                AutoGenerateColumns="False"
+                Margin="4,4,4,4"
+                VerticalAlignment="Top" 
+                Height="80" 
+                ItemsSource="{Binding Refills, Mode=OneWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="RefillTime" Binding="{Binding RefillTime, Mode=OneWay}" />
+                <DataGridTextColumn Header="Cash" Binding="{Binding Cash, Mode=OneWay}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="New Refill" />
+        <DockPanel>
+            <Label Content="Cash:" />
+            <TextBox Text="{Binding NewRefillCash, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Width="50"
+                     Margin="4,4,4,4"/>
+            <Button Content="Add Refill"
+                    Command="{Binding AddRefillCommand}"
+                    Width="100"
+                    Margin="4,4,4,4" />
+        </DockPanel>
     </StackPanel>
 </UserControl>

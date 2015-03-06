@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Practices.ServiceLocation;
+using System.Collections.ObjectModel;
 
 namespace CourseProject.ViewModel
 {
@@ -116,9 +117,11 @@ namespace CourseProject.ViewModel
                 {
                     IsSaved = false;
                 }
+                _refills = new ObservableCollection<Refill>(_account.Refills);
                 RaisePropertyChanged(AccountPropertyName);
                 RaisePropertyChanged(CashPropertyName);
                 RaisePropertyChanged(DebtCeilingPropertyName);
+                RaisePropertyChanged(RefillsPropertyName);
             }
         }
 
@@ -296,15 +299,17 @@ namespace CourseProject.ViewModel
         /// </summary>
         public const string RefillsPropertyName = "Refills";
 
+        private ObservableCollection<Refill> _refills;
+
         /// <summary>
         /// Sets and gets the Refills property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ICollection<Refill> Refills
+        public ObservableCollection<Refill> Refills
         {
             get
             {
-                return _account.Refills;
+                return _refills;
             }
 
             protected set
@@ -407,7 +412,71 @@ namespace CourseProject.ViewModel
             }
         }
 
-        //public bool RefillCash(); //go to refill view
-        //public bool PayCash();    //go to payment view
+        /// <summary>
+        /// The <see cref="NewRefillCash" /> property's name.
+        /// </summary>
+        public const string NewRefillCashPropertyName = "NewRefillCash";
+
+        private decimal _newRefillCash = 0;
+
+        /// <summary>
+        /// Sets and gets the NewRefillCash property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public decimal NewRefillCash
+        {
+            get
+            {
+                return _newRefillCash;
+            }
+
+            set
+            {
+                if (_newRefillCash == value)
+                {
+                    return;
+                }
+
+                _newRefillCash = value;
+                RaisePropertyChanged(NewRefillCashPropertyName);
+            }
+        }
+
+        private RelayCommand _addRefillCommand;
+
+        /// <summary>
+        /// Gets the AddRefillCommand.
+        /// </summary>
+        public RelayCommand AddRefillCommand
+        {
+            get
+            {
+                return _addRefillCommand
+                    ?? (_addRefillCommand = new RelayCommand(
+                    () =>
+                    {
+                        if (!AddRefillCommand.CanExecute(null))
+                        {
+                            return;
+                        }
+
+                        var refill = new Refill()
+                            {
+                                Account = Account,
+                                AccountID = AccountID,
+                                Cash = NewRefillCash,
+                                RefillID = _dataService.All<Refill>().Max(r => r.RefillID) + 1,
+                                RefillTime = DateTime.Now
+                            };
+                        Refills.Add(refill);
+                        RaisePropertyChanged(RefillsPropertyName);
+                        _dataService.Add<Refill>(refill);
+                        Cash += NewRefillCash;
+                        NewRefillCash = 0;
+                        SaveChangesCommand.Execute(null);
+                    },
+                    () => NewRefillCash > 0));
+            }
+        }
     }
 }
